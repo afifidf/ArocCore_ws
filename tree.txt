@@ -1,0 +1,2375 @@
+src
+├── DynamixelSDK
+│   ├── c
+│   │   ├── example
+│   │   │   ├── dxl_monitor
+│   │   │   │   ├── dxl_monitor.c
+│   │   │   │   ├── linux32
+│   │   │   │   │   └── Makefile
+│   │   │   │   ├── linux64
+│   │   │   │   │   └── Makefile
+│   │   │   │   ├── linux_sbc
+│   │   │   │   │   └── Makefile
+│   │   │   │   ├── mac
+│   │   │   │   │   └── Makefile
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── dxl_monitor
+│   │   │   │   │   │   ├── dxl_monitor.vcxproj
+│   │   │   │   │   │   ├── dxl_monitor.vcxproj.filters
+│   │   │   │   │   │   └── dxl_monitor.vcxproj.user
+│   │   │   │   │   └── dxl_monitor.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── dxl_monitor
+│   │   │   │       │   ├── dxl_monitor.vcxproj
+│   │   │   │       │   ├── dxl_monitor.vcxproj.filters
+│   │   │   │       │   └── dxl_monitor.vcxproj.user
+│   │   │   │       └── dxl_monitor.sln
+│   │   │   ├── protocol1.0
+│   │   │   │   ├── bulk_read
+│   │   │   │   │   ├── bulk_read.c
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── bulk_read
+│   │   │   │   │   │   │   ├── bulk_read.vcxproj
+│   │   │   │   │   │   │   ├── bulk_read.vcxproj.filters
+│   │   │   │   │   │   │   └── bulk_read.vcxproj.user
+│   │   │   │   │   │   └── bulk_read.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── bulk_read
+│   │   │   │   │       │   ├── bulk_read.vcxproj
+│   │   │   │   │       │   ├── bulk_read.vcxproj.filters
+│   │   │   │   │       │   └── bulk_read.vcxproj.user
+│   │   │   │   │       └── bulk_read.sln
+│   │   │   │   ├── multi_port
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── multi_port.c
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── multi_port
+│   │   │   │   │   │   │   ├── multi_port.vcxproj
+│   │   │   │   │   │   │   ├── multi_port.vcxproj.filters
+│   │   │   │   │   │   │   └── multi_port.vcxproj.user
+│   │   │   │   │   │   └── multi_port.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── multi_port
+│   │   │   │   │       │   ├── multi_port.vcxproj
+│   │   │   │   │       │   ├── multi_port.vcxproj.filters
+│   │   │   │   │       │   └── multi_port.vcxproj.user
+│   │   │   │   │       └── multi_port.sln
+│   │   │   │   ├── ping
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── ping.c
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── ping
+│   │   │   │   │   │   │   ├── ping.vcxproj
+│   │   │   │   │   │   │   ├── ping.vcxproj.filters
+│   │   │   │   │   │   │   └── ping.vcxproj.user
+│   │   │   │   │   │   └── ping.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── ping
+│   │   │   │   │       │   ├── ping.vcxproj
+│   │   │   │   │       │   ├── ping.vcxproj.filters
+│   │   │   │   │       │   └── ping.vcxproj.user
+│   │   │   │   │       └── ping.sln
+│   │   │   │   ├── read_write
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── read_write.c
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── read_write
+│   │   │   │   │   │   │   ├── read_write.vcxproj
+│   │   │   │   │   │   │   ├── read_write.vcxproj.filters
+│   │   │   │   │   │   │   └── read_write.vcxproj.user
+│   │   │   │   │   │   └── read_write.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── read_write
+│   │   │   │   │       │   ├── read_write.vcxproj
+│   │   │   │   │       │   ├── read_write.vcxproj.filters
+│   │   │   │   │       │   └── read_write.vcxproj.user
+│   │   │   │   │       └── read_write.sln
+│   │   │   │   ├── reset
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── reset.c
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── reset
+│   │   │   │   │   │   │   ├── reset.vcxproj
+│   │   │   │   │   │   │   ├── reset.vcxproj.filters
+│   │   │   │   │   │   │   └── reset.vcxproj.user
+│   │   │   │   │   │   └── reset.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── reset
+│   │   │   │   │       │   ├── reset.vcxproj
+│   │   │   │   │       │   ├── reset.vcxproj.filters
+│   │   │   │   │       │   └── reset.vcxproj.user
+│   │   │   │   │       └── reset.sln
+│   │   │   │   └── sync_write
+│   │   │   │       ├── linux32
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── linux64
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── linux_sbc
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── mac
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── sync_write.c
+│   │   │   │       ├── win32
+│   │   │   │       │   ├── sync_write
+│   │   │   │       │   │   ├── sync_write.vcxproj
+│   │   │   │       │   │   ├── sync_write.vcxproj.filters
+│   │   │   │       │   │   └── sync_write.vcxproj.user
+│   │   │   │       │   └── sync_write.sln
+│   │   │   │       └── win64
+│   │   │   │           ├── sync_write
+│   │   │   │           │   ├── sync_write.vcxproj
+│   │   │   │           │   ├── sync_write.vcxproj.filters
+│   │   │   │           │   └── sync_write.vcxproj.user
+│   │   │   │           └── sync_write.sln
+│   │   │   ├── protocol2.0
+│   │   │   │   ├── broadcast_ping
+│   │   │   │   │   ├── broadcast_ping.c
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── broadcast_ping
+│   │   │   │   │   │   │   ├── broadcast_ping.vcxproj
+│   │   │   │   │   │   │   ├── broadcast_ping.vcxproj.filters
+│   │   │   │   │   │   │   └── broadcast_ping.vcxproj.user
+│   │   │   │   │   │   └── broadcast_ping.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── broadcast_ping
+│   │   │   │   │       │   ├── broadcast_ping.vcxproj
+│   │   │   │   │       │   ├── broadcast_ping.vcxproj.filters
+│   │   │   │   │       │   └── broadcast_ping.vcxproj.user
+│   │   │   │   │       └── broadcast_ping.sln
+│   │   │   │   ├── bulk_read_write
+│   │   │   │   │   ├── bulk_read_write.c
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── bulk_read_write
+│   │   │   │   │   │   │   ├── bulk_read_write.vcxproj
+│   │   │   │   │   │   │   ├── bulk_read_write.vcxproj.filters
+│   │   │   │   │   │   │   └── bulk_read_write.vcxproj.user
+│   │   │   │   │   │   └── bulk_read_write.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── bulk_read_write
+│   │   │   │   │       │   ├── bulk_read_write.vcxproj
+│   │   │   │   │       │   ├── bulk_read_write.vcxproj.filters
+│   │   │   │   │       │   └── bulk_read_write.vcxproj.user
+│   │   │   │   │       └── bulk_read_write.sln
+│   │   │   │   ├── clear_multi_turn
+│   │   │   │   │   ├── clear_multi_turn.c
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── clear_multi_turn
+│   │   │   │   │   │   │   ├── clear_multi_turn.vcxproj
+│   │   │   │   │   │   │   ├── clear_multi_turn.vcxproj.filters
+│   │   │   │   │   │   │   └── clear_multi_turn.vcxproj.user
+│   │   │   │   │   │   └── clear_multi_turn.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── clear_multi_turn
+│   │   │   │   │       │   ├── clear_multi_turn.vcxproj
+│   │   │   │   │       │   ├── clear_multi_turn.vcxproj.filters
+│   │   │   │   │       │   └── clear_multi_turn.vcxproj.user
+│   │   │   │   │       └── clear_multi_turn.sln
+│   │   │   │   ├── factory_reset
+│   │   │   │   │   ├── factory_reset.c
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── factory_reset
+│   │   │   │   │   │   │   ├── factory_reset.vcxproj
+│   │   │   │   │   │   │   ├── factory_reset.vcxproj.filters
+│   │   │   │   │   │   │   └── factory_reset.vcxproj.user
+│   │   │   │   │   │   └── factory_reset.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── factory_reset
+│   │   │   │   │       │   ├── factory_reset.vcxproj
+│   │   │   │   │       │   ├── factory_reset.vcxproj.filters
+│   │   │   │   │       │   └── factory_reset.vcxproj.user
+│   │   │   │   │       └── factory_reset.sln
+│   │   │   │   ├── indirect_address
+│   │   │   │   │   ├── indirect_address.c
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   ├── indirect_address
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── indirect_address
+│   │   │   │   │   │   │   ├── indirect_address.vcxproj
+│   │   │   │   │   │   │   ├── indirect_address.vcxproj.filters
+│   │   │   │   │   │   │   └── indirect_address.vcxproj.user
+│   │   │   │   │   │   └── indirect_address.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── indirect_address
+│   │   │   │   │       │   ├── indirect_address.vcxproj
+│   │   │   │   │       │   ├── indirect_address.vcxproj.filters
+│   │   │   │   │       │   └── indirect_address.vcxproj.user
+│   │   │   │   │       └── indirect_address.sln
+│   │   │   │   ├── multi_port
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── multi_port.c
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── multi_port
+│   │   │   │   │   │   │   ├── multi_port.vcxproj
+│   │   │   │   │   │   │   ├── multi_port.vcxproj.filters
+│   │   │   │   │   │   │   └── multi_port.vcxproj.user
+│   │   │   │   │   │   └── multi_port.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── multi_port
+│   │   │   │   │       │   ├── multi_port.vcxproj
+│   │   │   │   │       │   ├── multi_port.vcxproj.filters
+│   │   │   │   │       │   └── multi_port.vcxproj.user
+│   │   │   │   │       └── multi_port.sln
+│   │   │   │   ├── ping
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── ping.c
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── ping
+│   │   │   │   │   │   │   ├── ping.vcxproj
+│   │   │   │   │   │   │   ├── ping.vcxproj.filters
+│   │   │   │   │   │   │   └── ping.vcxproj.user
+│   │   │   │   │   │   └── ping.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── ping
+│   │   │   │   │       │   ├── ping.vcxproj
+│   │   │   │   │       │   ├── ping.vcxproj.filters
+│   │   │   │   │       │   └── ping.vcxproj.user
+│   │   │   │   │       └── ping.sln
+│   │   │   │   ├── read_write
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   ├── Makefile
+│   │   │   │   │   │   └── read_write
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── read_write.c
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── read_write
+│   │   │   │   │   │   │   ├── read_write.vcxproj
+│   │   │   │   │   │   │   ├── read_write.vcxproj.filters
+│   │   │   │   │   │   │   └── read_write.vcxproj.user
+│   │   │   │   │   │   └── read_write.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── read_write
+│   │   │   │   │       │   ├── read_write.vcxproj
+│   │   │   │   │       │   ├── read_write.vcxproj.filters
+│   │   │   │   │       │   └── read_write.vcxproj.user
+│   │   │   │   │       └── read_write.sln
+│   │   │   │   ├── reboot
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── reboot.c
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── reboot
+│   │   │   │   │   │   │   ├── reboot.vcxproj
+│   │   │   │   │   │   │   ├── reboot.vcxproj.filters
+│   │   │   │   │   │   │   └── reboot.vcxproj.user
+│   │   │   │   │   │   └── reboot.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── reboot
+│   │   │   │   │       │   ├── reboot.vcxproj
+│   │   │   │   │       │   ├── reboot.vcxproj.filters
+│   │   │   │   │       │   └── reboot.vcxproj.user
+│   │   │   │   │       └── reboot.sln
+│   │   │   │   └── sync_read_write
+│   │   │   │       ├── linux32
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── linux64
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── linux_sbc
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── mac
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── sync_read_write.c
+│   │   │   │       ├── win32
+│   │   │   │       │   ├── sync_read_write
+│   │   │   │       │   │   ├── sync_read_write.vcxproj
+│   │   │   │       │   │   ├── sync_read_write.vcxproj.filters
+│   │   │   │       │   │   └── sync_read_write.vcxproj.user
+│   │   │   │       │   └── sync_read_write.sln
+│   │   │   │       └── win64
+│   │   │   │           ├── sync_read_write
+│   │   │   │           │   ├── sync_read_write.vcxproj
+│   │   │   │           │   ├── sync_read_write.vcxproj.filters
+│   │   │   │           │   └── sync_read_write.vcxproj.user
+│   │   │   │           └── sync_read_write.sln
+│   │   │   └── protocol_combined
+│   │   │       ├── linux32
+│   │   │       │   └── Makefile
+│   │   │       ├── linux64
+│   │   │       │   └── Makefile
+│   │   │       ├── linux_sbc
+│   │   │       │   └── Makefile
+│   │   │       ├── mac
+│   │   │       │   └── Makefile
+│   │   │       ├── protocol_combined.c
+│   │   │       ├── win32
+│   │   │       │   ├── protocol_combined
+│   │   │       │   │   ├── protocol_combined.vcxproj
+│   │   │       │   │   ├── protocol_combined.vcxproj.filters
+│   │   │       │   │   └── protocol_combined.vcxproj.user
+│   │   │       │   └── protocol_combined.sln
+│   │   │       └── win64
+│   │   │           ├── protocol_combined
+│   │   │           │   ├── protocol_combined.vcxproj
+│   │   │           │   ├── protocol_combined.vcxproj.filters
+│   │   │           │   └── protocol_combined.vcxproj.user
+│   │   │           └── protocol_combined.sln
+│   │   ├── include
+│   │   │   └── dynamixel_sdk
+│   │   │       ├── dynamixel_sdk.h
+│   │   │       ├── group_bulk_read.h
+│   │   │       ├── group_bulk_write.h
+│   │   │       ├── group_sync_read.h
+│   │   │       ├── group_sync_write.h
+│   │   │       ├── packet_handler.h
+│   │   │       ├── port_handler.h
+│   │   │       ├── port_handler_linux.h
+│   │   │       ├── port_handler_mac.h
+│   │   │       ├── port_handler_windows.h
+│   │   │       ├── protocol1_packet_handler.h
+│   │   │       ├── protocol2_packet_handler.h
+│   │   │       └── robotis_def.h
+│   │   └── src
+│   │       └── dynamixel_sdk
+│   │           ├── group_bulk_read.c
+│   │           ├── group_bulk_write.c
+│   │           ├── group_sync_read.c
+│   │           ├── group_sync_write.c
+│   │           ├── packet_handler.c
+│   │           ├── port_handler.c
+│   │           ├── port_handler_linux.c
+│   │           ├── port_handler_mac.c
+│   │           ├── port_handler_windows.c
+│   │           ├── protocol1_packet_handler.c
+│   │           └── protocol2_packet_handler.c
+│   ├── c#
+│   │   ├── dynamixel_functions_csharp
+│   │   │   ├── win32
+│   │   │   │   └── dynamixel.cs
+│   │   │   └── win64
+│   │   │       └── dynamixel.cs
+│   │   ├── protocol1.0
+│   │   │   ├── bulk_read
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── bulk_read
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── BulkRead.cs
+│   │   │   │   │   │   ├── bulk_read.csproj
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── bulk_read.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── bulk_read
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── BulkRead.cs
+│   │   │   │       │   ├── bulk_read.csproj
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── bulk_read.sln
+│   │   │   ├── multi_port
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── multi_port
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── MultiPort.cs
+│   │   │   │   │   │   ├── multi_port.csproj
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── multi_port.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── multi_port
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── MultiPort.cs
+│   │   │   │       │   ├── multi_port.csproj
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── multi_port.sln
+│   │   │   ├── ping
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── ping
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── Ping.cs
+│   │   │   │   │   │   ├── ping.csproj
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── ping.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── ping
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── Ping.cs
+│   │   │   │       │   ├── ping.csproj
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── ping.sln
+│   │   │   ├── read_write
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── read_write
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── Properties
+│   │   │   │   │   │   │   └── AssemblyInfo.cs
+│   │   │   │   │   │   ├── ReadWrite.cs
+│   │   │   │   │   │   ├── read_write.csproj
+│   │   │   │   │   │   └── read_write.csproj.user
+│   │   │   │   │   └── read_write.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── read_write
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── Properties
+│   │   │   │       │   │   └── AssemblyInfo.cs
+│   │   │   │       │   ├── ReadWrite.cs
+│   │   │   │       │   ├── read_write.csproj
+│   │   │   │       │   └── read_write.csproj.user
+│   │   │   │       └── read_write.sln
+│   │   │   ├── reset
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── reset
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── Properties
+│   │   │   │   │   │   │   └── AssemblyInfo.cs
+│   │   │   │   │   │   ├── Reset.cs
+│   │   │   │   │   │   └── reset.csproj
+│   │   │   │   │   └── reset.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── reset
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── Properties
+│   │   │   │       │   │   └── AssemblyInfo.cs
+│   │   │   │       │   ├── Reset.cs
+│   │   │   │       │   └── reset.csproj
+│   │   │   │       └── reset.sln
+│   │   │   └── sync_write
+│   │   │       ├── win32
+│   │   │       │   ├── sync_write
+│   │   │       │   │   ├── App.config
+│   │   │       │   │   ├── dynamixel.cs
+│   │   │       │   │   ├── Properties
+│   │   │       │   │   │   └── AssemblyInfo.cs
+│   │   │       │   │   ├── SyncWrite.cs
+│   │   │       │   │   └── sync_write.csproj
+│   │   │       │   └── sync_write.sln
+│   │   │       └── win64
+│   │   │           ├── sync_write
+│   │   │           │   ├── App.config
+│   │   │           │   ├── dynamixel.cs
+│   │   │           │   ├── Properties
+│   │   │           │   │   └── AssemblyInfo.cs
+│   │   │           │   ├── SyncWrite.cs
+│   │   │           │   └── sync_write.csproj
+│   │   │           └── sync_write.sln
+│   │   ├── protocol2.0
+│   │   │   ├── broadcast_ping
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── broadcast_ping
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── BroadcastPing.cs
+│   │   │   │   │   │   ├── broadcast_ping.csproj
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── broadcast_ping.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── broadcast_ping
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── BroadcastPing.cs
+│   │   │   │       │   ├── broadcast_ping.csproj
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── broadcast_ping.sln
+│   │   │   ├── bulk_read_write
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── bulk_read_write
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── BulkReadWrite.cs
+│   │   │   │   │   │   ├── bulk_read_write.csproj
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── bulk_read_write.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── bulk_read_write
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── BulkReadWrite.cs
+│   │   │   │       │   ├── bulk_read_write.csproj
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── bulk_read_write.sln
+│   │   │   ├── clear_multi_turn
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── clear_multi_turn
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── ClearMultiTurn.cs
+│   │   │   │   │   │   ├── clear_multi_turn.csproj
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── clear_multi_turn.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── clear_multi_turn
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── ClearMultiTurn.cs
+│   │   │   │       │   ├── clear_multi_turn.csproj
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── clear_multi_turn.sln
+│   │   │   ├── factory_reset
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── factory_reset
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── FactoryReset.cs
+│   │   │   │   │   │   ├── factory_reset.csproj
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── factory_reset.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── factory_reset
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── FactoryReset.cs
+│   │   │   │       │   ├── factory_reset.csproj
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── factory_reset.sln
+│   │   │   ├── indirect_address
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── indirect_address
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── IndirectAddress.cs
+│   │   │   │   │   │   ├── indirect_address.csproj
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── indirect_address.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── indirect_address
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── IndirectAddress.cs
+│   │   │   │       │   ├── indirect_address.csproj
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── indirect_address.sln
+│   │   │   ├── multi_port
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── multi_port
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── MultiPort.cs
+│   │   │   │   │   │   ├── multi_port.csproj
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── multi_port.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── multi_port
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── MultiPort.cs
+│   │   │   │       │   ├── multi_port.csproj
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── multi_port.sln
+│   │   │   ├── ping
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── ping
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── Ping.cs
+│   │   │   │   │   │   ├── ping.csproj
+│   │   │   │   │   │   └── Properties
+│   │   │   │   │   │       └── AssemblyInfo.cs
+│   │   │   │   │   └── ping.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── ping
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── Ping.cs
+│   │   │   │       │   ├── ping.csproj
+│   │   │   │       │   └── Properties
+│   │   │   │       │       └── AssemblyInfo.cs
+│   │   │   │       └── ping.sln
+│   │   │   ├── read_write
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── read_write
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── Properties
+│   │   │   │   │   │   │   └── AssemblyInfo.cs
+│   │   │   │   │   │   ├── ReadWrite.cs
+│   │   │   │   │   │   ├── read_write.csproj
+│   │   │   │   │   │   └── read_write.csproj.user
+│   │   │   │   │   └── read_write.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── read_write
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── Properties
+│   │   │   │       │   │   └── AssemblyInfo.cs
+│   │   │   │       │   ├── ReadWrite.cs
+│   │   │   │       │   ├── read_write.csproj
+│   │   │   │       │   └── read_write.csproj.user
+│   │   │   │       └── read_write.sln
+│   │   │   ├── reboot
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── reboot
+│   │   │   │   │   │   ├── App.config
+│   │   │   │   │   │   ├── dynamixel.cs
+│   │   │   │   │   │   ├── Properties
+│   │   │   │   │   │   │   └── AssemblyInfo.cs
+│   │   │   │   │   │   ├── Reboot.cs
+│   │   │   │   │   │   └── reboot.csproj
+│   │   │   │   │   └── reboot.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── reboot
+│   │   │   │       │   ├── App.config
+│   │   │   │       │   ├── dynamixel.cs
+│   │   │   │       │   ├── Properties
+│   │   │   │       │   │   └── AssemblyInfo.cs
+│   │   │   │       │   ├── Reboot.cs
+│   │   │   │       │   └── reboot.csproj
+│   │   │   │       └── reboot.sln
+│   │   │   └── sync_read_write
+│   │   │       ├── win32
+│   │   │       │   ├── sync_read_write
+│   │   │       │   │   ├── App.config
+│   │   │       │   │   ├── dynamixel.cs
+│   │   │       │   │   ├── Properties
+│   │   │       │   │   │   └── AssemblyInfo.cs
+│   │   │       │   │   ├── SyncReadWrite.cs
+│   │   │       │   │   └── sync_read_write.csproj
+│   │   │       │   └── sync_read_write.sln
+│   │   │       └── win64
+│   │   │           ├── sync_read_write
+│   │   │           │   ├── App.config
+│   │   │           │   ├── dynamixel.cs
+│   │   │           │   ├── Properties
+│   │   │           │   │   └── AssemblyInfo.cs
+│   │   │           │   ├── SyncReadWrite.cs
+│   │   │           │   └── sync_read_write.csproj
+│   │   │           └── sync_read_write.sln
+│   │   └── protocol_combined
+│   │       ├── win32
+│   │       │   ├── protocol_combined
+│   │       │   │   ├── App.config
+│   │       │   │   ├── dynamixel.cs
+│   │       │   │   ├── obj
+│   │       │   │   │   ├── Debug
+│   │       │   │   │   │   └── protocol_combined.csproj.CoreCompileInputs.cache
+│   │       │   │   │   ├── Release
+│   │       │   │   │   │   └── protocol_combined.csproj.CoreCompileInputs.cache
+│   │       │   │   │   └── x86
+│   │       │   │   │       ├── Debug
+│   │       │   │   │       │   └── protocol_combined.csproj.CoreCompileInputs.cache
+│   │       │   │   │       └── Release
+│   │       │   │   │           └── protocol_combined.csproj.CoreCompileInputs.cache
+│   │       │   │   ├── Properties
+│   │       │   │   │   └── AssemblyInfo.cs
+│   │       │   │   ├── ProtocolCombined.cs
+│   │       │   │   └── protocol_combined.csproj
+│   │       │   └── protocol_combined.sln
+│   │       └── win64
+│   │           ├── protocol_combined
+│   │           │   ├── App.config
+│   │           │   ├── dynamixel.cs
+│   │           │   ├── obj
+│   │           │   │   ├── Debug
+│   │           │   │   │   └── protocol_combined.csproj.CoreCompileInputs.cache
+│   │           │   │   ├── Release
+│   │           │   │   │   └── protocol_combined.csproj.CoreCompileInputs.cache
+│   │           │   │   └── x64
+│   │           │   │       ├── Debug
+│   │           │   │       │   └── protocol_combined.csproj.CoreCompileInputs.cache
+│   │           │   │       └── Release
+│   │           │   │           ├── protocol_combined.csprojAssemblyReference.cache
+│   │           │   │           ├── protocol_combined.csproj.CoreCompileInputs.cache
+│   │           │   │           ├── TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+│   │           │   │           ├── TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+│   │           │   │           └── TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+│   │           │   ├── Properties
+│   │           │   │   └── AssemblyInfo.cs
+│   │           │   ├── ProtocolCombined.cs
+│   │           │   └── protocol_combined.csproj
+│   │           └── protocol_combined.sln
+│   ├── c++
+│   │   ├── example
+│   │   │   ├── dxl_monitor
+│   │   │   │   ├── dxl_monitor.cpp
+│   │   │   │   ├── linux32
+│   │   │   │   │   └── Makefile
+│   │   │   │   ├── linux64
+│   │   │   │   │   └── Makefile
+│   │   │   │   ├── linux_sbc
+│   │   │   │   │   └── Makefile
+│   │   │   │   ├── mac
+│   │   │   │   │   └── Makefile
+│   │   │   │   ├── win32
+│   │   │   │   │   ├── dxl_monitor
+│   │   │   │   │   │   ├── dxl_monitor.vcxproj
+│   │   │   │   │   │   ├── dxl_monitor.vcxproj.filters
+│   │   │   │   │   │   └── dxl_monitor.vcxproj.user
+│   │   │   │   │   └── dxl_monitor.sln
+│   │   │   │   └── win64
+│   │   │   │       ├── dxl_monitor
+│   │   │   │       │   ├── dxl_monitor.vcxproj
+│   │   │   │       │   ├── dxl_monitor.vcxproj.filters
+│   │   │   │       │   └── dxl_monitor.vcxproj.user
+│   │   │   │       └── dxl_monitor.sln
+│   │   │   ├── protocol1.0
+│   │   │   │   ├── bulk_read
+│   │   │   │   │   ├── bulk_read.cpp
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── bulk_read
+│   │   │   │   │   │   │   ├── bulk_read.vcxproj
+│   │   │   │   │   │   │   ├── bulk_read.vcxproj.filters
+│   │   │   │   │   │   │   └── bulk_read.vcxproj.user
+│   │   │   │   │   │   └── bulk_read.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── bulk_read
+│   │   │   │   │       │   ├── bulk_read.vcxproj
+│   │   │   │   │       │   ├── bulk_read.vcxproj.filters
+│   │   │   │   │       │   └── bulk_read.vcxproj.user
+│   │   │   │   │       └── bulk_read.sln
+│   │   │   │   ├── multi_port
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── multi_port.cpp
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── multi_port
+│   │   │   │   │   │   │   ├── multi_port.vcxproj
+│   │   │   │   │   │   │   ├── multi_port.vcxproj.filters
+│   │   │   │   │   │   │   └── multi_port.vcxproj.user
+│   │   │   │   │   │   └── multi_port.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── multi_port
+│   │   │   │   │       │   ├── multi_port.vcxproj
+│   │   │   │   │       │   ├── multi_port.vcxproj.filters
+│   │   │   │   │       │   └── multi_port.vcxproj.user
+│   │   │   │   │       └── multi_port.sln
+│   │   │   │   ├── ping
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── ping.cpp
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── ping
+│   │   │   │   │   │   │   ├── ping.vcxproj
+│   │   │   │   │   │   │   ├── ping.vcxproj.filters
+│   │   │   │   │   │   │   └── ping.vcxproj.user
+│   │   │   │   │   │   └── ping.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── ping
+│   │   │   │   │       │   ├── ping.vcxproj
+│   │   │   │   │       │   ├── ping.vcxproj.filters
+│   │   │   │   │       │   └── ping.vcxproj.user
+│   │   │   │   │       └── ping.sln
+│   │   │   │   ├── read_write
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── read_write.cpp
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── read_write
+│   │   │   │   │   │   │   ├── read_write.vcxproj
+│   │   │   │   │   │   │   ├── read_write.vcxproj.filters
+│   │   │   │   │   │   │   └── read_write.vcxproj.user
+│   │   │   │   │   │   └── read_write.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── read_write
+│   │   │   │   │       │   ├── read_write.vcxproj
+│   │   │   │   │       │   ├── read_write.vcxproj.filters
+│   │   │   │   │       │   └── read_write.vcxproj.user
+│   │   │   │   │       └── read_write.sln
+│   │   │   │   ├── reset
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── reset.cpp
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── reset
+│   │   │   │   │   │   │   ├── reset.vcxproj
+│   │   │   │   │   │   │   ├── reset.vcxproj.filters
+│   │   │   │   │   │   │   └── reset.vcxproj.user
+│   │   │   │   │   │   └── reset.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── reset
+│   │   │   │   │       │   ├── reset.vcxproj
+│   │   │   │   │       │   ├── reset.vcxproj.filters
+│   │   │   │   │       │   └── reset.vcxproj.user
+│   │   │   │   │       └── reset.sln
+│   │   │   │   └── sync_write
+│   │   │   │       ├── linux32
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── linux64
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── linux_sbc
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── mac
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── sync_write.cpp
+│   │   │   │       ├── win32
+│   │   │   │       │   ├── sync_write
+│   │   │   │       │   │   ├── sync_write.vcxproj
+│   │   │   │       │   │   ├── sync_write.vcxproj.filters
+│   │   │   │       │   │   └── sync_write.vcxproj.user
+│   │   │   │       │   └── sync_write.sln
+│   │   │   │       └── win64
+│   │   │   │           ├── sync_write
+│   │   │   │           │   ├── sync_write.vcxproj
+│   │   │   │           │   ├── sync_write.vcxproj.filters
+│   │   │   │           │   └── sync_write.vcxproj.user
+│   │   │   │           └── sync_write.sln
+│   │   │   ├── protocol2.0
+│   │   │   │   ├── broadcast_ping
+│   │   │   │   │   ├── broadcast_ping.cpp
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── broadcast_ping
+│   │   │   │   │   │   │   ├── broadcast_ping.vcxproj
+│   │   │   │   │   │   │   ├── broadcast_ping.vcxproj.filters
+│   │   │   │   │   │   │   └── broadcast_ping.vcxproj.user
+│   │   │   │   │   │   └── broadcast_ping.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── broadcast_ping
+│   │   │   │   │       │   ├── broadcast_ping.vcxproj
+│   │   │   │   │       │   ├── broadcast_ping.vcxproj.filters
+│   │   │   │   │       │   └── broadcast_ping.vcxproj.user
+│   │   │   │   │       └── broadcast_ping.sln
+│   │   │   │   ├── bulk_read_write
+│   │   │   │   │   ├── bulk_read_write.cpp
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── bulk_read_write
+│   │   │   │   │   │   │   ├── bulk_read_write.vcxproj
+│   │   │   │   │   │   │   ├── bulk_read_write.vcxproj.filters
+│   │   │   │   │   │   │   └── bulk_read_write.vcxproj.user
+│   │   │   │   │   │   └── bulk_read_write.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── bulk_read_write
+│   │   │   │   │       │   ├── bulk_read_write.vcxproj
+│   │   │   │   │       │   ├── bulk_read_write.vcxproj.filters
+│   │   │   │   │       │   └── bulk_read_write.vcxproj.user
+│   │   │   │   │       └── bulk_read_write.sln
+│   │   │   │   ├── clear_multi_turn
+│   │   │   │   │   ├── clear_multi_turn.cpp
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── clear_multi_turn
+│   │   │   │   │   │   │   ├── clear_multi_turn.vcxproj
+│   │   │   │   │   │   │   ├── clear_multi_turn.vcxproj.filters
+│   │   │   │   │   │   │   └── clear_multi_turn.vcxproj.user
+│   │   │   │   │   │   └── clear_multi_turn.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── clear_multi_turn
+│   │   │   │   │       │   ├── clear_multi_turn.vcxproj
+│   │   │   │   │       │   ├── clear_multi_turn.vcxproj.filters
+│   │   │   │   │       │   └── clear_multi_turn.vcxproj.user
+│   │   │   │   │       └── clear_multi_turn.sln
+│   │   │   │   ├── factory_reset
+│   │   │   │   │   ├── factory_reset.cpp
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── factory_reset
+│   │   │   │   │   │   │   ├── factory_reset.vcxproj
+│   │   │   │   │   │   │   ├── factory_reset.vcxproj.filters
+│   │   │   │   │   │   │   └── factory_reset.vcxproj.user
+│   │   │   │   │   │   └── factory_reset.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── factory_reset
+│   │   │   │   │       │   ├── factory_reset.vcxproj
+│   │   │   │   │       │   ├── factory_reset.vcxproj.filters
+│   │   │   │   │       │   └── factory_reset.vcxproj.user
+│   │   │   │   │       └── factory_reset.sln
+│   │   │   │   ├── fast_bulk_read
+│   │   │   │   │   ├── fast_bulk_read.cpp
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── fast_bulk_read
+│   │   │   │   │   │   │   ├── fast_bulk_read.vcxproj
+│   │   │   │   │   │   │   ├── fast_bulk_read.vcxproj.filters
+│   │   │   │   │   │   │   └── fast_bulk_read.vcxproj.user
+│   │   │   │   │   │   └── fast_bulk_read.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── fast_bulk_read
+│   │   │   │   │       │   ├── fast_bulk_read.vcxproj
+│   │   │   │   │       │   ├── fast_bulk_read.vcxproj.filters
+│   │   │   │   │       │   └── fast_bulk_read.vcxproj.user
+│   │   │   │   │       └── fast_bulk_read.sln
+│   │   │   │   ├── fast_sync_read
+│   │   │   │   │   ├── fast_sync_read.cpp
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── fast_sync_read
+│   │   │   │   │   │   │   ├── fast_sync_read.vcxproj
+│   │   │   │   │   │   │   ├── fast_sync_read.vcxproj.filters
+│   │   │   │   │   │   │   └── fast_sync_read.vcxproj.user
+│   │   │   │   │   │   └── fast_sync_read.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── fast_sync_read
+│   │   │   │   │       │   ├── fast_sync_read.vcxproj
+│   │   │   │   │       │   ├── fast_sync_read.vcxproj.filters
+│   │   │   │   │       │   └── fast_sync_read.vcxproj.user
+│   │   │   │   │       └── fast_sync_read.sln
+│   │   │   │   ├── indirect_address
+│   │   │   │   │   ├── indirect_address.cpp
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── indirect_address
+│   │   │   │   │   │   │   ├── indirect_address.vcxproj
+│   │   │   │   │   │   │   ├── indirect_address.vcxproj.filters
+│   │   │   │   │   │   │   └── indirect_address.vcxproj.user
+│   │   │   │   │   │   └── indirect_address.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── indirect_address
+│   │   │   │   │       │   ├── indirect_address.vcxproj
+│   │   │   │   │       │   ├── indirect_address.vcxproj.filters
+│   │   │   │   │       │   └── indirect_address.vcxproj.user
+│   │   │   │   │       └── indirect_address.sln
+│   │   │   │   ├── multi_port
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── multi_port.cpp
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── multi_port
+│   │   │   │   │   │   │   ├── multi_port.vcxproj
+│   │   │   │   │   │   │   ├── multi_port.vcxproj.filters
+│   │   │   │   │   │   │   └── multi_port.vcxproj.user
+│   │   │   │   │   │   └── multi_port.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── multi_port
+│   │   │   │   │       │   ├── multi_port.vcxproj
+│   │   │   │   │       │   ├── multi_port.vcxproj.filters
+│   │   │   │   │       │   └── multi_port.vcxproj.user
+│   │   │   │   │       └── multi_port.sln
+│   │   │   │   ├── ping
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── ping.cpp
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── ping
+│   │   │   │   │   │   │   ├── ping.vcxproj
+│   │   │   │   │   │   │   ├── ping.vcxproj.filters
+│   │   │   │   │   │   │   └── ping.vcxproj.user
+│   │   │   │   │   │   └── ping.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── ping
+│   │   │   │   │       │   ├── ping.vcxproj
+│   │   │   │   │       │   ├── ping.vcxproj.filters
+│   │   │   │   │       │   └── ping.vcxproj.user
+│   │   │   │   │       └── ping.sln
+│   │   │   │   ├── read_write
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── read_write.cpp
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── read_write
+│   │   │   │   │   │   │   ├── read_write.vcxproj
+│   │   │   │   │   │   │   ├── read_write.vcxproj.filters
+│   │   │   │   │   │   │   └── read_write.vcxproj.user
+│   │   │   │   │   │   └── read_write.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── read_write
+│   │   │   │   │       │   ├── read_write.vcxproj
+│   │   │   │   │       │   ├── read_write.vcxproj.filters
+│   │   │   │   │       │   └── read_write.vcxproj.user
+│   │   │   │   │       └── read_write.sln
+│   │   │   │   ├── reboot
+│   │   │   │   │   ├── linux32
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux64
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── linux_sbc
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── mac
+│   │   │   │   │   │   └── Makefile
+│   │   │   │   │   ├── reboot.cpp
+│   │   │   │   │   ├── win32
+│   │   │   │   │   │   ├── reboot
+│   │   │   │   │   │   │   ├── reboot.vcxproj
+│   │   │   │   │   │   │   ├── reboot.vcxproj.filters
+│   │   │   │   │   │   │   └── reboot.vcxproj.user
+│   │   │   │   │   │   └── reboot.sln
+│   │   │   │   │   └── win64
+│   │   │   │   │       ├── reboot
+│   │   │   │   │       │   ├── reboot.vcxproj
+│   │   │   │   │       │   ├── reboot.vcxproj.filters
+│   │   │   │   │       │   └── reboot.vcxproj.user
+│   │   │   │   │       └── reboot.sln
+│   │   │   │   └── sync_read_write
+│   │   │   │       ├── linux32
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── linux64
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── linux_sbc
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── mac
+│   │   │   │       │   └── Makefile
+│   │   │   │       ├── sync_read_write.cpp
+│   │   │   │       ├── win32
+│   │   │   │       │   ├── sync_read_write
+│   │   │   │       │   │   ├── sync_read_write.vcxproj
+│   │   │   │       │   │   ├── sync_read_write.vcxproj.filters
+│   │   │   │       │   │   └── sync_read_write.vcxproj.user
+│   │   │   │       │   └── sync_read_write.sln
+│   │   │   │       └── win64
+│   │   │   │           ├── sync_read_write
+│   │   │   │           │   ├── sync_read_write.vcxproj
+│   │   │   │           │   ├── sync_read_write.vcxproj.filters
+│   │   │   │           │   └── sync_read_write.vcxproj.user
+│   │   │   │           └── sync_read_write.sln
+│   │   │   └── protocol_combined
+│   │   │       ├── linux32
+│   │   │       │   └── Makefile
+│   │   │       ├── linux64
+│   │   │       │   └── Makefile
+│   │   │       ├── linux_sbc
+│   │   │       │   └── Makefile
+│   │   │       ├── mac
+│   │   │       │   └── Makefile
+│   │   │       ├── protocol_combined.cpp
+│   │   │       ├── win32
+│   │   │       │   ├── protocol_combined
+│   │   │       │   │   ├── protocol_combined.vcxproj
+│   │   │       │   │   ├── protocol_combined.vcxproj.filters
+│   │   │       │   │   └── protocol_combined.vcxproj.user
+│   │   │       │   └── protocol_combined.sln
+│   │   │       └── win64
+│   │   │           ├── protocol_combined
+│   │   │           │   ├── protocol_combined.vcxproj
+│   │   │           │   ├── protocol_combined.vcxproj.filters
+│   │   │           │   └── protocol_combined.vcxproj.user
+│   │   │           └── protocol_combined.sln
+│   │   ├── include
+│   │   │   └── dynamixel_sdk
+│   │   │       ├── dynamixel_sdk.h
+│   │   │       ├── group_bulk_read.h
+│   │   │       ├── group_bulk_write.h
+│   │   │       ├── group_fast_bulk_read.h
+│   │   │       ├── group_fast_sync_read.h
+│   │   │       ├── group_handler.h
+│   │   │       ├── group_sync_read.h
+│   │   │       ├── group_sync_write.h
+│   │   │       ├── packet_handler.h
+│   │   │       ├── port_handler_arduino.h
+│   │   │       ├── port_handler.h
+│   │   │       ├── port_handler_linux.h
+│   │   │       ├── port_handler_mac.h
+│   │   │       ├── port_handler_windows.h
+│   │   │       ├── protocol1_packet_handler.h
+│   │   │       └── protocol2_packet_handler.h
+│   │   ├── keywords.txt
+│   │   ├── library.properties
+│   │   └── src
+│   │       ├── dynamixel_sdk
+│   │       │   ├── group_bulk_read.cpp
+│   │       │   ├── group_bulk_write.cpp
+│   │       │   ├── group_fast_bulk_read.cpp
+│   │       │   ├── group_fast_sync_read.cpp
+│   │       │   ├── group_handler.cpp
+│   │       │   ├── group_sync_read.cpp
+│   │       │   ├── group_sync_write.cpp
+│   │       │   ├── packet_handler.cpp
+│   │       │   ├── port_handler_arduino.cpp
+│   │       │   ├── port_handler.cpp
+│   │       │   ├── port_handler_linux.cpp
+│   │       │   ├── port_handler_mac.cpp
+│   │       │   ├── port_handler_windows.cpp
+│   │       │   ├── protocol1_packet_handler.cpp
+│   │       │   └── protocol2_packet_handler.cpp
+│   │       └── DynamixelSDK.h
+│   ├── documents
+│   │   └── cpp
+│   │       └── html
+│   │           ├── arrowdown.png
+│   │           ├── arrowright.png
+│   │           ├── bc_s.png
+│   │           ├── bdwn.png
+│   │           ├── classdynamixel_1_1PacketHandler__inherit__graph.map
+│   │           ├── classdynamixel_1_1PacketHandler__inherit__graph.md5
+│   │           ├── classdynamixel_1_1PacketHandler__inherit__graph.png
+│   │           ├── classdynamixel_1_1PortHandlerArduino__coll__graph.map
+│   │           ├── classdynamixel_1_1PortHandlerArduino__coll__graph.md5
+│   │           ├── classdynamixel_1_1PortHandlerArduino__coll__graph.png
+│   │           ├── classdynamixel_1_1PortHandlerArduino__inherit__graph.map
+│   │           ├── classdynamixel_1_1PortHandlerArduino__inherit__graph.md5
+│   │           ├── classdynamixel_1_1PortHandlerArduino__inherit__graph.png
+│   │           ├── classdynamixel_1_1PortHandler__inherit__graph.map
+│   │           ├── classdynamixel_1_1PortHandler__inherit__graph.md5
+│   │           ├── classdynamixel_1_1PortHandler__inherit__graph.png
+│   │           ├── classdynamixel_1_1PortHandlerLinux__coll__graph.map
+│   │           ├── classdynamixel_1_1PortHandlerLinux__coll__graph.md5
+│   │           ├── classdynamixel_1_1PortHandlerLinux__coll__graph.png
+│   │           ├── classdynamixel_1_1PortHandlerLinux__inherit__graph.map
+│   │           ├── classdynamixel_1_1PortHandlerLinux__inherit__graph.md5
+│   │           ├── classdynamixel_1_1PortHandlerLinux__inherit__graph.png
+│   │           ├── classdynamixel_1_1PortHandlerMac__coll__graph.map
+│   │           ├── classdynamixel_1_1PortHandlerMac__coll__graph.md5
+│   │           ├── classdynamixel_1_1PortHandlerMac__coll__graph.png
+│   │           ├── classdynamixel_1_1PortHandlerMac__inherit__graph.map
+│   │           ├── classdynamixel_1_1PortHandlerMac__inherit__graph.md5
+│   │           ├── classdynamixel_1_1PortHandlerMac__inherit__graph.png
+│   │           ├── classdynamixel_1_1PortHandlerWindows__coll__graph.map
+│   │           ├── classdynamixel_1_1PortHandlerWindows__coll__graph.md5
+│   │           ├── classdynamixel_1_1PortHandlerWindows__coll__graph.png
+│   │           ├── classdynamixel_1_1PortHandlerWindows__inherit__graph.map
+│   │           ├── classdynamixel_1_1PortHandlerWindows__inherit__graph.md5
+│   │           ├── classdynamixel_1_1PortHandlerWindows__inherit__graph.png
+│   │           ├── classdynamixel_1_1Protocol1PacketHandler__coll__graph.map
+│   │           ├── classdynamixel_1_1Protocol1PacketHandler__coll__graph.md5
+│   │           ├── classdynamixel_1_1Protocol1PacketHandler__coll__graph.png
+│   │           ├── classdynamixel_1_1Protocol1PacketHandler__inherit__graph.map
+│   │           ├── classdynamixel_1_1Protocol1PacketHandler__inherit__graph.md5
+│   │           ├── classdynamixel_1_1Protocol1PacketHandler__inherit__graph.png
+│   │           ├── classdynamixel_1_1Protocol2PacketHandler__coll__graph.map
+│   │           ├── classdynamixel_1_1Protocol2PacketHandler__coll__graph.md5
+│   │           ├── classdynamixel_1_1Protocol2PacketHandler__coll__graph.png
+│   │           ├── classdynamixel_1_1Protocol2PacketHandler__inherit__graph.map
+│   │           ├── classdynamixel_1_1Protocol2PacketHandler__inherit__graph.md5
+│   │           ├── classdynamixel_1_1Protocol2PacketHandler__inherit__graph.png
+│   │           ├── closed.png
+│   │           ├── doc.png
+│   │           ├── doxygen.css
+│   │           ├── doxygen.png
+│   │           ├── dynsections.js
+│   │           ├── folderclosed.png
+│   │           ├── folderopen.png
+│   │           ├── graph_legend.md5
+│   │           ├── graph_legend.png
+│   │           ├── inherit_graph_0.map
+│   │           ├── inherit_graph_0.md5
+│   │           ├── inherit_graph_0.png
+│   │           ├── inherit_graph_1.map
+│   │           ├── inherit_graph_1.md5
+│   │           ├── inherit_graph_1.png
+│   │           ├── inherit_graph_2.map
+│   │           ├── inherit_graph_2.md5
+│   │           ├── inherit_graph_2.png
+│   │           ├── inherit_graph_3.map
+│   │           ├── inherit_graph_3.md5
+│   │           ├── inherit_graph_3.png
+│   │           ├── inherit_graph_4.map
+│   │           ├── inherit_graph_4.md5
+│   │           ├── inherit_graph_4.png
+│   │           ├── inherit_graph_5.map
+│   │           ├── inherit_graph_5.md5
+│   │           ├── inherit_graph_5.png
+│   │           ├── jquery.js
+│   │           ├── nav_f.png
+│   │           ├── nav_g.png
+│   │           ├── nav_h.png
+│   │           ├── open.png
+│   │           ├── search
+│   │           │   ├── all_0.js
+│   │           │   ├── all_1.js
+│   │           │   ├── all_2.js
+│   │           │   ├── all_3.js
+│   │           │   ├── all_4.js
+│   │           │   ├── all_5.js
+│   │           │   ├── all_6.js
+│   │           │   ├── all_7.js
+│   │           │   ├── all_8.js
+│   │           │   ├── all_9.js
+│   │           │   ├── all_a.js
+│   │           │   ├── all_b.js
+│   │           │   ├── all_c.js
+│   │           │   ├── all_d.js
+│   │           │   ├── classes_0.js
+│   │           │   ├── classes_1.js
+│   │           │   ├── close.png
+│   │           │   ├── functions_0.js
+│   │           │   ├── functions_1.js
+│   │           │   ├── functions_2.js
+│   │           │   ├── functions_3.js
+│   │           │   ├── functions_4.js
+│   │           │   ├── functions_5.js
+│   │           │   ├── functions_6.js
+│   │           │   ├── functions_7.js
+│   │           │   ├── functions_8.js
+│   │           │   ├── functions_9.js
+│   │           │   ├── functions_a.js
+│   │           │   ├── functions_b.js
+│   │           │   ├── functions_c.js
+│   │           │   ├── mag_sel.png
+│   │           │   ├── pages_0.js
+│   │           │   ├── search.css
+│   │           │   ├── searchdata.js
+│   │           │   ├── search.js
+│   │           │   ├── search_l.png
+│   │           │   ├── search_m.png
+│   │           │   ├── search_r.png
+│   │           │   ├── variables_0.js
+│   │           │   └── variables_1.js
+│   │           ├── splitbar.png
+│   │           ├── sync_off.png
+│   │           ├── sync_on.png
+│   │           ├── tab_a.png
+│   │           ├── tab_b.png
+│   │           ├── tab_h.png
+│   │           ├── tabs.css
+│   │           └── tab_s.png
+│   ├── Doxyfile
+│   ├── java
+│   │   ├── dynamixel_functions_java
+│   │   │   ├── mac_x64
+│   │   │   │   └── Dynamixel.java
+│   │   │   ├── x64
+│   │   │   │   └── Dynamixel.java
+│   │   │   └── x86
+│   │   │       └── Dynamixel.java
+│   │   ├── protocol1.0
+│   │   │   ├── bulk_read
+│   │   │   │   └── BulkRead.java
+│   │   │   ├── multi_port
+│   │   │   │   └── MultiPort.java
+│   │   │   ├── ping
+│   │   │   │   └── Ping.java
+│   │   │   ├── read_write
+│   │   │   │   └── ReadWrite.java
+│   │   │   ├── reset
+│   │   │   │   └── Reset.java
+│   │   │   └── sync_write
+│   │   │       └── SyncWrite.java
+│   │   ├── protocol2.0
+│   │   │   ├── broadcast_ping
+│   │   │   │   └── BroadcastPing.java
+│   │   │   ├── bulk_read_write
+│   │   │   │   └── BulkReadWrite.java
+│   │   │   ├── clear_multi_turn
+│   │   │   │   └── ClearMultiTurn.java
+│   │   │   ├── factory_reset
+│   │   │   │   └── FactoryReset.java
+│   │   │   ├── indirect_address
+│   │   │   │   └── IndirectAddress.java
+│   │   │   ├── multi_port
+│   │   │   │   └── MultiPort.java
+│   │   │   ├── ping
+│   │   │   │   └── Ping.java
+│   │   │   ├── read_write
+│   │   │   │   └── ReadWrite.java
+│   │   │   ├── reboot
+│   │   │   │   └── Reboot.java
+│   │   │   └── sync_read_write
+│   │   │       └── SyncReadWrite.java
+│   │   └── protocol_combined
+│   │       └── ProtocolCombined.java
+│   ├── labview
+│   │   ├── dxl_x86_c.lvlib
+│   │   │   ├── dir.mnu
+│   │   │   ├── dxl_x86_c.dll
+│   │   │   ├── dxl_x86_c.lvlib
+│   │   │   └── VIs
+│   │   │       ├── bulk Read Tx.vi
+│   │   │       ├── bulk Write Tx Only.vi
+│   │   │       ├── clear Port.vi
+│   │   │       ├── close Port.vi
+│   │   │       ├── dir.mnu
+│   │   │       ├── factory Reset.vi
+│   │   │       ├── get Baud Rate.vi
+│   │   │       ├── get Broadcast Ping Result.vi
+│   │   │       ├── get Last Rx Packet Error.vi
+│   │   │       ├── get Last Tx Rx Result.vi
+│   │   │       ├── get Port Name.vi
+│   │   │       ├── get Rx Packet Error.vi
+│   │   │       ├── get Tx Rx Result.vi
+│   │   │       ├── group Bulk Read Add Param.vi
+│   │   │       ├── group Bulk Read Clear Param.vi
+│   │   │       ├── group Bulk Read Get Data.vi
+│   │   │       ├── group Bulk Read Is Available.vi
+│   │   │       ├── group Bulk Read Remove Param.vi
+│   │   │       ├── group Bulk Read Rx Packet.vi
+│   │   │       ├── group Bulk Read Tx Packet.vi
+│   │   │       ├── group Bulk Read Tx Rx Packet.vi
+│   │   │       ├── group Bulk Read.vi
+│   │   │       ├── group Bulk Write Add Param.vi
+│   │   │       ├── group Bulk Write Change Param.vi
+│   │   │       ├── group Bulk Write Clear Param.vi
+│   │   │       ├── group Bulk Write Remove Param.vi
+│   │   │       ├── group Bulk Write Tx Packet.vi
+│   │   │       ├── group Bulk Write.vi
+│   │   │       ├── group Sync Read Add Param.vi
+│   │   │       ├── group Sync Read Clear Param.vi
+│   │   │       ├── group Sync Read Get Data.vi
+│   │   │       ├── group Sync Read Is Available.vi
+│   │   │       ├── group Sync Read Remove Param.vi
+│   │   │       ├── group Sync Read Rx Packet.vi
+│   │   │       ├── group Sync Read Tx Packet.vi
+│   │   │       ├── group Sync Read Tx Rx Packet.vi
+│   │   │       ├── group Sync Read.vi
+│   │   │       ├── group Sync Write Add Param.vi
+│   │   │       ├── group Sync Write Change Param.vi
+│   │   │       ├── group Sync Write Clear Param.vi
+│   │   │       ├── group Sync Write Remove Param.vi
+│   │   │       ├── group Sync Write Tx Packet.vi
+│   │   │       ├── group Sync Write.vi
+│   │   │       ├── is Packet Timeout.vi
+│   │   │       ├── open Port.vi
+│   │   │       ├── packet Handler.vi
+│   │   │       ├── ping Get Model Num.vi
+│   │   │       ├── ping.vi
+│   │   │       ├── port Handler.vi
+│   │   │       ├── print Rx Packet Error.vi
+│   │   │       ├── print Tx Rx Result.vi
+│   │   │       ├── read1Byte Rx.vi
+│   │   │       ├── read1Byte Tx Rx.vi
+│   │   │       ├── read1Byte Tx.vi
+│   │   │       ├── read2Byte Rx.vi
+│   │   │       ├── read2Byte Tx Rx.vi
+│   │   │       ├── read2Byte Tx.vi
+│   │   │       ├── read4Byte Rx.vi
+│   │   │       ├── read4Byte Tx Rx.vi
+│   │   │       ├── read4Byte Tx.vi
+│   │   │       ├── read Port.vi
+│   │   │       ├── read Rx.vi
+│   │   │       ├── read Tx Rx.vi
+│   │   │       ├── read Tx.vi
+│   │   │       ├── reboot.vi
+│   │   │       ├── reg Write Tx Only.vi
+│   │   │       ├── reg Write Tx Rx.vi
+│   │   │       ├── rx Packet.vi
+│   │   │       ├── set Baud Rate.vi
+│   │   │       ├── set Data Write.vi
+│   │   │       ├── set Packet Timeout M Sec.vi
+│   │   │       ├── set Packet Timeout.vi
+│   │   │       ├── set Port Name.vi
+│   │   │       ├── sync Read Tx.vi
+│   │   │       ├── sync Write Tx Only.vi
+│   │   │       ├── tx Packet.vi
+│   │   │       ├── tx Rx Packet.vi
+│   │   │       ├── write1Byte Tx Only.vi
+│   │   │       ├── write1Byte Tx Rx.vi
+│   │   │       ├── write2Byte Tx Only.vi
+│   │   │       ├── write2Byte Tx Rx.vi
+│   │   │       ├── write4Byte Tx Only.vi
+│   │   │       ├── write4Byte Tx Rx.vi
+│   │   │       ├── write Port.vi
+│   │   │       ├── write Tx Only.vi
+│   │   │       └── write Tx Rx.vi
+│   │   ├── protocol1.0
+│   │   │   ├── bulk_read.vi
+│   │   │   ├── factory_reset.vi
+│   │   │   ├── multi_port.vi
+│   │   │   ├── ping.vi
+│   │   │   ├── read_write.vi
+│   │   │   └── sync_write.vi
+│   │   ├── protocol2.0
+│   │   │   ├── broadcast_ping.vi
+│   │   │   ├── bulk_read_write.vi
+│   │   │   ├── clear_multi_turn.vi
+│   │   │   ├── factory_reset.vi
+│   │   │   ├── indirect_address.vi
+│   │   │   ├── multi_port.vi
+│   │   │   ├── ping.vi
+│   │   │   ├── read_write_p.vi
+│   │   │   ├── read_write_x.vi
+│   │   │   ├── reboot.vi
+│   │   │   └── sync_read_write.vi
+│   │   └── protocol_combined
+│   │       └── protocol_combined.vi
+│   ├── LICENSE
+│   ├── matlab
+│   │   ├── m_basic_function
+│   │   │   ├── group_bulk_read
+│   │   │   │   ├── groupBulkReadAddParam.m
+│   │   │   │   ├── groupBulkReadClearParam.m
+│   │   │   │   ├── groupBulkReadGetData.m
+│   │   │   │   ├── groupBulkReadIsAvailable.m
+│   │   │   │   ├── groupBulkRead.m
+│   │   │   │   ├── groupBulkReadRemoveParam.m
+│   │   │   │   ├── groupBulkReadRxPacket.m
+│   │   │   │   ├── groupBulkReadTxPacket.m
+│   │   │   │   └── groupBulkReadTxRxPacket.m
+│   │   │   ├── group_bulk_write
+│   │   │   │   ├── groupBulkWriteAddParam.m
+│   │   │   │   ├── groupBulkWriteChangeParam.m
+│   │   │   │   ├── groupBulkWriteClearParam.m
+│   │   │   │   ├── groupBulkWrite.m
+│   │   │   │   ├── groupBulkWriteRemoveParam.m
+│   │   │   │   └── groupBulkWriteTxPacket.m
+│   │   │   ├── group_sync_read
+│   │   │   │   ├── groupSyncReadAddParam.m
+│   │   │   │   ├── groupSyncReadClearParam.m
+│   │   │   │   ├── groupSyncReadGetData.m
+│   │   │   │   ├── groupSyncReadIsAvailable.m
+│   │   │   │   ├── groupSyncRead.m
+│   │   │   │   ├── groupSyncReadRemoveParam.m
+│   │   │   │   ├── groupSyncReadRxPacket.m
+│   │   │   │   ├── groupSyncReadTxPacket.m
+│   │   │   │   └── groupSyncReadTxRxPacket.m
+│   │   │   ├── group_sync_write
+│   │   │   │   ├── groupSyncWriteAddParam.m
+│   │   │   │   ├── groupSyncWriteChangeParam.m
+│   │   │   │   ├── groupSyncWriteClearParam.m
+│   │   │   │   ├── groupSyncWrite.m
+│   │   │   │   ├── groupSyncWriteRemoveParam.m
+│   │   │   │   └── groupSyncWriteTxPacket.m
+│   │   │   ├── packet_handler
+│   │   │   │   ├── broadcastPing.m
+│   │   │   │   ├── bulkReadTx.m
+│   │   │   │   ├── bulkWriteTxOnly.m
+│   │   │   │   ├── clearMultiTurn.m
+│   │   │   │   ├── factoryReset.m
+│   │   │   │   ├── getBroadcastPingResult.m
+│   │   │   │   ├── getDataRead.m
+│   │   │   │   ├── getLastRxPacketError.m
+│   │   │   │   ├── getLastTxRxResult.m
+│   │   │   │   ├── getRxPacketError.m
+│   │   │   │   ├── getTxRxResult.m
+│   │   │   │   ├── packetHandler.m
+│   │   │   │   ├── pingGetModelNum.m
+│   │   │   │   ├── ping.m
+│   │   │   │   ├── read1ByteRx.m
+│   │   │   │   ├── read1ByteTx.m
+│   │   │   │   ├── read1ByteTxRx.m
+│   │   │   │   ├── read2ByteRx.m
+│   │   │   │   ├── read2ByteTx.m
+│   │   │   │   ├── read2ByteTxRx.m
+│   │   │   │   ├── read4ByteRx.m
+│   │   │   │   ├── read4ByteTx.m
+│   │   │   │   ├── read4ByteTxRx.m
+│   │   │   │   ├── readRx.m
+│   │   │   │   ├── readTx.m
+│   │   │   │   ├── readTxRx.m
+│   │   │   │   ├── reboot.m
+│   │   │   │   ├── regWriteTxOnly.m
+│   │   │   │   ├── regWriteTxRx.m
+│   │   │   │   ├── rxPacket.m
+│   │   │   │   ├── setDataWrite.m
+│   │   │   │   ├── syncReadTx.m
+│   │   │   │   ├── syncWriteTxOnly.m
+│   │   │   │   ├── txPacket.m
+│   │   │   │   ├── txrxPacket.m
+│   │   │   │   ├── write1ByteTxOnly.m
+│   │   │   │   ├── write1ByteTxRx.m
+│   │   │   │   ├── write2ByteTxOnly.m
+│   │   │   │   ├── write2ByteTxRx.m
+│   │   │   │   ├── write4ByteTxOnly.m
+│   │   │   │   ├── write4ByteTxRx.m
+│   │   │   │   ├── writeTxOnly.m
+│   │   │   │   └── writeTxRx.m
+│   │   │   └── port_handler
+│   │   │       ├── clearPort.m
+│   │   │       ├── closePort.m
+│   │   │       ├── getBaudRate.m
+│   │   │       ├── getPortName.m
+│   │   │       ├── isPacketTimeout.m
+│   │   │       ├── openPort.m
+│   │   │       ├── portHandler.m
+│   │   │       ├── setBaudRate.m
+│   │   │       ├── setPacketTimeout.m
+│   │   │       ├── setPacketTimeoutMSec.m
+│   │   │       └── setPortName.m
+│   │   ├── protocol1.0
+│   │   │   ├── bulk_read.m
+│   │   │   ├── factory_reset.m
+│   │   │   ├── multi_port.m
+│   │   │   ├── ping.m
+│   │   │   ├── read_write.m
+│   │   │   └── sync_write.m
+│   │   ├── protocol2.0
+│   │   │   ├── broadcast_ping.m
+│   │   │   ├── bulk_read_write.m
+│   │   │   ├── clear_multi_turn.m
+│   │   │   ├── factory_reset.m
+│   │   │   ├── indirect_address.m
+│   │   │   ├── multi_port.m
+│   │   │   ├── ping.m
+│   │   │   ├── read_write.m
+│   │   │   ├── rebooting.m
+│   │   │   └── sync_read_write.m
+│   │   └── protocol_combined
+│   │       └── protocol_combined.m
+│   ├── python
+│   │   ├── AMENT_IGNORE
+│   │   ├── LICENSE.txt
+│   │   ├── README.txt
+│   │   ├── setup.py
+│   │   ├── src
+│   │   │   └── dynamixel_sdk
+│   │   │       ├── group_bulk_read.py
+│   │   │       ├── group_bulk_write.py
+│   │   │       ├── group_sync_read.py
+│   │   │       ├── group_sync_write.py
+│   │   │       ├── __init__.py
+│   │   │       ├── packet_handler.py
+│   │   │       ├── port_handler.py
+│   │   │       ├── protocol1_packet_handler.py
+│   │   │       ├── protocol2_packet_handler.py
+│   │   │       └── robotis_def.py
+│   │   └── tests
+│   │       ├── protocol1_0
+│   │       │   ├── bulk_read.py
+│   │       │   ├── factory_reset.py
+│   │       │   ├── multi_port.py
+│   │       │   ├── ping.py
+│   │       │   ├── read_write.py
+│   │       │   └── sync_write.py
+│   │       ├── protocol2_0
+│   │       │   ├── broadcast_ping.py
+│   │       │   ├── bulk_read_write.py
+│   │       │   ├── clear_multi_turn.py
+│   │       │   ├── factory_reset.py
+│   │       │   ├── fast_bulk_read.py
+│   │       │   ├── fast_sync_read.py
+│   │       │   ├── indirect_address.py
+│   │       │   ├── multi_port.py
+│   │       │   ├── ping.py
+│   │       │   ├── read_write.py
+│   │       │   ├── reboot.py
+│   │       │   └── sync_read_write.py
+│   │       └── protocol_combined.py
+│   ├── README.md
+│   ├── ReleaseNote.md
+│   └── ros
+│       ├── dynamixel_sdk
+│       │   ├── CHANGELOG.rst
+│       │   ├── CMakeLists.txt
+│       │   ├── include
+│       │   │   └── dynamixel_sdk
+│       │   │       ├── dynamixel_sdk.h
+│       │   │       ├── group_bulk_read.h
+│       │   │       ├── group_bulk_write.h
+│       │   │       ├── group_fast_bulk_read.h
+│       │   │       ├── group_fast_sync_read.h
+│       │   │       ├── group_handler.h
+│       │   │       ├── group_sync_read.h
+│       │   │       ├── group_sync_write.h
+│       │   │       ├── packet_handler.h
+│       │   │       ├── port_handler_arduino.h
+│       │   │       ├── port_handler.h
+│       │   │       ├── port_handler_linux.h
+│       │   │       ├── port_handler_mac.h
+│       │   │       ├── port_handler_windows.h
+│       │   │       ├── protocol1_packet_handler.h
+│       │   │       └── protocol2_packet_handler.h
+│       │   ├── package.xml
+│       │   └── src
+│       │       ├── dynamixel_sdk
+│       │       │   ├── group_bulk_read.cpp
+│       │       │   ├── group_bulk_read.py
+│       │       │   ├── group_bulk_write.cpp
+│       │       │   ├── group_bulk_write.py
+│       │       │   ├── group_fast_bulk_read.cpp
+│       │       │   ├── group_fast_sync_read.cpp
+│       │       │   ├── group_handler.cpp
+│       │       │   ├── group_sync_read.cpp
+│       │       │   ├── group_sync_read.py
+│       │       │   ├── group_sync_write.cpp
+│       │       │   ├── group_sync_write.py
+│       │       │   ├── __init__.py
+│       │       │   ├── packet_handler.cpp
+│       │       │   ├── packet_handler.py
+│       │       │   ├── port_handler_arduino.cpp
+│       │       │   ├── port_handler.cpp
+│       │       │   ├── port_handler_linux.cpp
+│       │       │   ├── port_handler_mac.cpp
+│       │       │   ├── port_handler.py
+│       │       │   ├── port_handler_windows.cpp
+│       │       │   ├── protocol1_packet_handler.cpp
+│       │       │   ├── protocol1_packet_handler.py
+│       │       │   ├── protocol2_packet_handler.cpp
+│       │       │   ├── protocol2_packet_handler.py
+│       │       │   └── robotis_def.py
+│       │       └── DynamixelSDK.h
+│       ├── dynamixel_sdk_custom_interfaces
+│       │   ├── CHANGELOG.rst
+│       │   ├── CMakeLists.txt
+│       │   ├── msg
+│       │   │   └── SetPosition.msg
+│       │   ├── package.xml
+│       │   └── srv
+│       │       └── GetPosition.srv
+│       └── dynamixel_sdk_examples
+│           ├── CHANGELOG.rst
+│           ├── CMakeLists.txt
+│           ├── include
+│           │   └── read_write_node.hpp
+│           ├── package.xml
+│           └── src
+│               ├── read_write_node.cpp
+│               └── read_write_node.py
+├── op3_advanced_detector
+│   ├── config
+│   │   ├── camera_param.yaml
+│   │   └── detector_config.yaml
+│   ├── launch
+│   │   ├── advanced_detector.launch.py
+│   │   └── ball_detector_from_usb_cam.launch.py
+│   ├── op3_advanced_detector
+│   │   ├── __init__.py
+│   │   ├── op3_advanced_detector.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-312.pyc
+│   │   │   └── op3_advanced_detector.cpython-312.pyc
+│   │   └── yolov8s
+│   ├── package.xml
+│   ├── resource
+│   │   └── op3_advanced_detector
+│   ├── setup.cfg
+│   ├── setup.py
+│   └── test
+│       ├── test_copyright.py
+│       ├── test_flake8.py
+│       └── test_pep257.py
+├── op3_yolo_viewer
+│   ├── op3_yolo_viewer
+│   │   ├── __init__.py
+│   │   └── yolo_viewer.py
+│   ├── package.xml
+│   ├── resource
+│   │   └── op3_yolo_viewer
+│   ├── setup.cfg
+│   └── setup.py
+├── ROBOTIS-Framework
+│   ├── LICENSE
+│   ├── README.md
+│   ├── robotis_controller
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── robotis_controller
+│   │   │       └── robotis_controller.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── robotis_controller
+│   │           └── robotis_controller.cpp
+│   ├── robotis_device
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── devices
+│   │   │   ├── dynamixel
+│   │   │   │   ├── GRIPPER.device
+│   │   │   │   ├── GRIPPER_TORQUE.device
+│   │   │   │   ├── H42-20-S300-R(A).device
+│   │   │   │   ├── H42-20-S300-R.device
+│   │   │   │   ├── H42P-020-S300-R.device
+│   │   │   │   ├── H54-100-B210-R-NR.device
+│   │   │   │   ├── H54-100-S500-R(A).device
+│   │   │   │   ├── H54-100-S500-R.device
+│   │   │   │   ├── H54-200-B500-R.device
+│   │   │   │   ├── H54-200-S500-R(A).device
+│   │   │   │   ├── H54-200-S500-R.device
+│   │   │   │   ├── H54P-100-S500-R.device
+│   │   │   │   ├── H54P-200-B500-R.device
+│   │   │   │   ├── H54P-200-S500-R.device
+│   │   │   │   ├── L42-10-S300-R.device
+│   │   │   │   ├── L54-30-S400-R.device
+│   │   │   │   ├── L54-30-S500-R.device
+│   │   │   │   ├── L54-50-S290-R.device
+│   │   │   │   ├── L54-50-S500-R.device
+│   │   │   │   ├── M42-10-S260-R.device
+│   │   │   │   ├── M54-40-S250-R.device
+│   │   │   │   ├── M54-60-S250-R.device
+│   │   │   │   ├── MX-106.device
+│   │   │   │   ├── MX-28.device
+│   │   │   │   ├── MX-64.device
+│   │   │   │   ├── PH42-020-S300-R.device
+│   │   │   │   ├── PH54-100-S500-R.device
+│   │   │   │   ├── PH54-200-S500-R.device
+│   │   │   │   ├── RH-P12-RN(A).device
+│   │   │   │   ├── RH-P12-RN.device
+│   │   │   │   ├── XM-430.device
+│   │   │   │   ├── XM430-W210.device
+│   │   │   │   ├── XM430-W350.device
+│   │   │   │   ├── XM540-W150.device
+│   │   │   │   └── XM540-W270.device
+│   │   │   └── sensor
+│   │   │       ├── CM-740.device
+│   │   │       └── OPEN-CR.device
+│   │   ├── include
+│   │   │   └── robotis_device
+│   │   │       ├── control_table_item.h
+│   │   │       ├── device.h
+│   │   │       ├── dynamixel.h
+│   │   │       ├── dynamixel_state.h
+│   │   │       ├── robot.h
+│   │   │       ├── sensor.h
+│   │   │       ├── sensor_state.h
+│   │   │       └── time_stamp.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── robotis_device
+│   │           ├── dynamixel.cpp
+│   │           ├── robot.cpp
+│   │           └── sensor.cpp
+│   └── robotis_framework_common
+│       ├── CHANGELOG.rst
+│       ├── CMakeLists.txt
+│       ├── include
+│       │   └── robotis_framework_common
+│       │       ├── motion_module.h
+│       │       ├── sensor_module.h
+│       │       └── singleton.h
+│       └── package.xml
+├── ROBOTIS-Framework-msgs
+│   ├── LICENSE
+│   ├── README.md
+│   └── robotis_controller_msgs
+│       ├── CHANGELOG.rst
+│       ├── CMakeLists.txt
+│       ├── msg
+│       │   ├── JointCtrlModule.msg
+│       │   ├── StatusMsg.msg
+│       │   ├── SyncWriteItem.msg
+│       │   └── WriteControlTable.msg
+│       ├── package.xml
+│       └── srv
+│           ├── GetJointModule.srv
+│           ├── LoadOffset.srv
+│           ├── SetJointModule.srv
+│           └── SetModule.srv
+├── ROBOTIS-Math
+│   ├── LICENSE
+│   ├── README.md
+│   └── robotis_math
+│       ├── CHANGELOG.rst
+│       ├── CMakeLists.txt
+│       ├── include
+│       │   └── robotis_math
+│       │       ├── bezier_curve.h
+│       │       ├── fifth_order_polynomial_trajectory.h
+│       │       ├── minimum_jerk_trajectory.h
+│       │       ├── minimum_jerk_trajectory_with_via_point.h
+│       │       ├── preview_control.h
+│       │       ├── robotis_linear_algebra.h
+│       │       ├── robotis_math_base.h
+│       │       ├── robotis_math.h
+│       │       ├── robotis_trajectory_calculator.h
+│       │       ├── simple_trapezoidal_velocity_profile.h
+│       │       └── step_data_define.h
+│       ├── package.xml
+│       └── src
+│           ├── bezier_curve.cpp
+│           ├── fifth_order_polynomial_trajectory.cpp
+│           ├── minimum_jerk_trajectory.cpp
+│           ├── minimum_jerk_trajectory_with_via_point.cpp
+│           ├── preview_control.cpp
+│           ├── robotis_linear_algebra.cpp
+│           ├── robotis_math_base.cpp
+│           ├── robotis_trajectory_calculator.cpp
+│           ├── simple_trapezoidal_velocity_profile.cpp
+│           └── step_data_define.cpp
+├── ROBOTIS-OP3
+│   ├── LICENSE
+│   ├── op3_action_module
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── data
+│   │   │   ├── motion_4095.bin
+│   │   │   └── motion_4095_bk.bin
+│   │   ├── include
+│   │   │   └── op3_action_module
+│   │   │       ├── action_file_define.h
+│   │   │       └── action_module.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── action_module.cpp
+│   ├── op3_balance_control
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── op3_balance_control
+│   │   │       └── op3_balance_control.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── op3_balance_control.cpp
+│   ├── op3_base_module
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── data
+│   │   │   └── ini_pose.yaml
+│   │   ├── include
+│   │   │   └── op3_base_module
+│   │   │       ├── base_module.h
+│   │   │       └── base_module_state.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       ├── base_module.cpp
+│   │       └── base_module_state.cpp
+│   ├── op3_direct_control_module
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── op3_direct_control_module
+│   │   │       └── direct_control_module.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── direct_control_module.cpp
+│   ├── op3_head_control_module
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── op3_head_control_module
+│   │   │       └── head_control_module.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── head_control_module.cpp
+│   ├── op3_kinematics_dynamics
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── op3_kinematics_dynamics
+│   │   │       ├── link_data.h
+│   │   │       ├── op3_kinematics_dynamics_define.h
+│   │   │       └── op3_kinematics_dynamics.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       ├── link_data.cpp
+│   │       └── op3_kinematics_dynamics.cpp
+│   ├── op3_localization
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── op3_localization
+│   │   │       └── op3_localization.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       ├── main.cpp
+│   │       └── op3_localization.cpp
+│   ├── op3_manager
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── config
+│   │   │   ├── dxl_init_OP3.yaml
+│   │   │   ├── offset.yaml
+│   │   │   └── OP3.robot
+│   │   ├── launch
+│   │   │   ├── op3_manager.launch.py
+│   │   │   └── op3_simulation.launch.py
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── op3_manager.cpp
+│   ├── op3_online_walking_module
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── config
+│   │   │   ├── balance_gain.yaml
+│   │   │   ├── joint_feedback_gain.yaml
+│   │   │   ├── joint_feedforward_gain.yaml
+│   │   │   └── walking_parm.yaml
+│   │   ├── include
+│   │   │   └── op3_online_walking_module
+│   │   │       ├── joint_control.h
+│   │   │       ├── online_walking_module.h
+│   │   │       ├── op3_kdl.h
+│   │   │       ├── walking_control.h
+│   │   │       └── wholebody_control.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       ├── joint_control.cpp
+│   │       ├── online_walking_module.cpp
+│   │       ├── op3_kdl.cpp
+│   │       ├── walking_control.cpp
+│   │       └── wholebody_control.cpp
+│   ├── op3_tuning_module
+│   │   ├── CMakeLists.txt
+│   │   ├── data
+│   │   │   ├── offset.yaml
+│   │   │   └── tune_pose.yaml
+│   │   ├── include
+│   │   │   └── op3_tuning_module
+│   │   │       ├── tuning_data.h
+│   │   │       ├── tuning_module.h
+│   │   │       └── tuning_module_state.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       ├── tuning_data.cpp
+│   │       ├── tuning_module.cpp
+│   │       └── tuning_module_state.cpp
+│   ├── op3_walking_module
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── config
+│   │   │   └── param.yaml
+│   │   ├── include
+│   │   │   └── op3_walking_module
+│   │   │       ├── op3_walking_module.h
+│   │   │       └── op3_walking_parameter.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── op3_walking_module.cpp
+│   ├── open_cr_module
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── open_cr_module
+│   │   │       └── open_cr_module.h
+│   │   ├── package.xml
+│   │   └── src
+│   │       └── open_cr_module.cpp
+│   └── README.md
+├── ROBOTIS-OP3-Common
+│   ├── LICENSE
+│   ├── op3_description
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── doc
+│   │   │   ├── OP3 mass property.docx
+│   │   │   ├── op3_sim.docx
+│   │   │   └── op3_sim.ods
+│   │   ├── launch
+│   │   │   └── op3_display.launch.py
+│   │   ├── meshes
+│   │   │   ├── base.stl
+│   │   │   ├── body.stl
+│   │   │   ├── h1.stl
+│   │   │   ├── h2.stl
+│   │   │   ├── la1.stl
+│   │   │   ├── la2.stl
+│   │   │   ├── la3.stl
+│   │   │   ├── ll1.stl
+│   │   │   ├── ll2.stl
+│   │   │   ├── ll3.stl
+│   │   │   ├── ll4.stl
+│   │   │   ├── ll5.stl
+│   │   │   ├── ll6.stl
+│   │   │   ├── ra1.stl
+│   │   │   ├── ra2.stl
+│   │   │   ├── ra3.stl
+│   │   │   ├── rl1.stl
+│   │   │   ├── rl2.stl
+│   │   │   ├── rl3.stl
+│   │   │   ├── rl4.stl
+│   │   │   ├── rl5.stl
+│   │   │   └── rl6.stl
+│   │   ├── package.xml
+│   │   ├── rviz
+│   │   │   └── op3.rviz
+│   │   └── urdf
+│   │       ├── gazebo_harness.xacro
+│   │       ├── robotis_op3.gazebo.xacro
+│   │       ├── robotis_op3.inertia.xacro
+│   │       ├── robotis_op3.structure.head.xacro
+│   │       ├── robotis_op3.structure.larm.xacro
+│   │       ├── robotis_op3.structure.lleg.xacro
+│   │       ├── robotis_op3.structure.rarm.xacro
+│   │       ├── robotis_op3.structure.rleg.xacro
+│   │       ├── robotis_op3.transmissions.xacro
+│   │       ├── robotis_op3.urdf.xacro
+│   │       └── robotis_op3.visuals.xacro
+│   └── README.md
+├── ROBOTIS-OP3-Demo
+│   ├── op3_bringup
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── launch
+│   │   │   ├── op3_bringup.launch.py
+│   │   │   └── op3_bringup_visualization.launch.py
+│   │   └── package.xml
+│   ├── op3_demo
+│   │   ├── CHANGELOG.rst
+│   │   ├── CMakeLists.txt
+│   │   ├── data
+│   │   │   └── mp3
+│   │   │       ├── Autonomous soccer mode.mp3
+│   │   │       ├── Bye bye.mp3
+│   │   │       ├── Clap please.mp3
+│   │   │       ├── Demonstration ready mode.mp3
+│   │   │       ├── Headstand.mp3
+│   │   │       ├── Interactive motion mode.mp3
+│   │   │       ├── Intro01.mp3
+│   │   │       ├── Intro02.mp3
+│   │   │       ├── Intro03.mp3
+│   │   │       ├── Introduction.mp3
+│   │   │       ├── intro_test.mp3
+│   │   │       ├── Left kick.mp3
+│   │   │       ├── No.mp3
+│   │   │       ├── Oops.mp3
+│   │   │       ├── Right kick.mp3
+│   │   │       ├── Sensor calibration complete.mp3
+│   │   │       ├── Sensor calibration fail.mp3
+│   │   │       ├── Shoot.mp3
+│   │   │       ├── Sit down.mp3
+│   │   │       ├── Stand up.mp3
+│   │   │       ├── Start motion demonstration.mp3
+│   │   │       ├── Start soccer demonstration.mp3
+│   │   │       ├── Start vision processing demonstration.mp3
+│   │   │       ├── System shutdown.mp3
+│   │   │       ├── test
+│   │   │       │   ├── Announce mic test.mp3
+│   │   │       │   ├── Button test mode.mp3
+│   │   │       │   ├── Mic test mode.mp3
+│   │   │       │   ├── Mode button long pressed.mp3
+│   │   │       │   ├── Mode button pressed.mp3
+│   │   │       │   ├── Self test ready mode.mp3
+│   │   │       │   ├── Start button long pressed.mp3
+│   │   │       │   ├── Start button pressed.mp3
+│   │   │       │   ├── Start button test mode.mp3
+│   │   │       │   ├── Start mic test mode.mp3
+│   │   │       │   ├── Start playing.mp3
+│   │   │       │   ├── Start recording.mp3
+│   │   │       │   ├── User button long pressed.mp3
+│   │   │       │   └── User button pressed.mp3
+│   │   │       ├── Thank you.mp3
+│   │   │       ├── Vision processing mode.mp3
+│   │   │       ├── Wow.mp3
+│   │   │       ├── Yes go.mp3
+│   │   │       └── Yes.mp3
+│   │   ├── include
+│   │   │   └── op3_demo
+│   │   │       ├── action_demo.h
+│   │   │       ├── ball_follower.h
+│   │   │       ├── ball_tracker.h
+│   │   │       ├── button_test.h
+│   │   │       ├── face_tracker.h
+│   │   │       ├── mic_test.h
+│   │   │       ├── op_demo.h
+│   │   │       ├── soccer_demo.h
+│   │   │       └── vision_demo.h
+│   │   ├── launch
+│   │   │   ├── demo.launch.xml
+│   │   │   ├── face_detection_op3.launch.xml
+│   │   │   └── self_test.launch.xml
+│   │   ├── list
+│   │   │   ├── action_script_bk.yaml
+│   │   │   └── action_script.yaml
+│   │   ├── package.xml
+│   │   └── src
+│   │       ├── action
+│   │       │   └── action_demo.cpp
+│   │       ├── demo_node.cpp
+│   │       ├── soccer
+│   │       │   ├── ball_follower.cpp
+│   │       │   ├── ball_tracker.cpp
+│   │       │   └── soccer_demo.cpp
+│   │       ├── test
+│   │       │   ├── button_test.cpp
+│   │       │   └── mic_test.cpp
+│   │       ├── test_node.cpp
+│   │       └── vision
+│   │           ├── face_tracker.cpp
+│   │           └── vision_demo.cpp
+│   └── op3_read_write_demo
+│       ├── CMakeLists.txt
+│       ├── launch
+│       │   └── op3_read_write.launch.xml
+│       ├── package.xml
+│       └── src
+│           └── read_write.cpp
+├── ROBOTIS-OP3-ETC
+│   └── usb_cam
+│       ├── AUTHORS.md
+│       ├── CHANGELOG.rst
+│       ├── CMakeLists.txt
+│       ├── config
+│       │   ├── camera_info.yaml
+│       │   ├── params_1.yaml
+│       │   └── params_2.yaml
+│       ├── CONTRIBUTING.md
+│       ├── docs
+│       │   ├── doxybook2_config.json
+│       │   ├── doxygen.config
+│       │   ├── index.md -> ../README.md
+│       │   └── requirements.txt
+│       ├── include
+│       │   └── usb_cam
+│       │       ├── constants.hpp
+│       │       ├── conversions.hpp
+│       │       ├── formats
+│       │       │   ├── av_pixel_format_helper.hpp
+│       │       │   ├── m420.hpp
+│       │       │   ├── mjpeg.hpp
+│       │       │   ├── mono.hpp
+│       │       │   ├── pixel_format_base.hpp
+│       │       │   ├── rgb.hpp
+│       │       │   ├── utils.hpp
+│       │       │   ├── uyvy.hpp
+│       │       │   └── yuyv.hpp
+│       │       ├── usb_cam.hpp
+│       │       ├── usb_cam_node.hpp
+│       │       └── utils.hpp
+│       ├── launch
+│       │   ├── camera_config.py
+│       │   ├── camera.launch.py
+│       │   └── __init__.py
+│       ├── LICENSE
+│       ├── mainpage.dox
+│       ├── mkdocs.yml
+│       ├── msg
+│       │   └── Format.msg
+│       ├── package.xml
+│       ├── README.md
+│       ├── scripts
+│       │   └── show_image.py
+│       ├── src
+│       │   ├── LICENSE
+│       │   ├── usb_cam.cpp
+│       │   └── usb_cam_node.cpp
+│       └── test
+│           ├── gtest_main.cpp
+│           ├── test_pixel_formats.cpp
+│           ├── test_usb_cam_lib.cpp
+│           └── test_usb_cam_utils.cpp
+└── ROBOTIS-OP3-msgs
+    ├── LICENSE
+    ├── op3_action_module_msgs
+    │   ├── CHANGELOG.rst
+    │   ├── CMakeLists.txt
+    │   ├── msg
+    │   │   └── StartAction.msg
+    │   ├── package.xml
+    │   └── srv
+    │       └── IsRunning.srv
+    ├── op3_ball_detector_msgs
+    │   ├── CMakeLists.txt
+    │   ├── msg
+    │   │   ├── BallDetectorParams.msg
+    │   │   └── CircleSetStamped.msg
+    │   ├── package.xml
+    │   └── srv
+    │       ├── GetParameters.srv
+    │       └── SetParameters.srv
+    ├── op3_camera_setting_tool_msgs
+    │   ├── CMakeLists.txt
+    │   ├── msg
+    │   │   ├── CameraParams.msg
+    │   │   ├── V4lParameter.msg
+    │   │   └── V4lParameters.msg
+    │   ├── package.xml
+    │   └── srv
+    │       ├── GetParameters.srv
+    │       └── SetParameters.srv
+    ├── op3_offset_tuner_msgs
+    │   ├── CHANGELOG.rst
+    │   ├── CMakeLists.txt
+    │   ├── msg
+    │   │   ├── JointOffsetData.msg
+    │   │   ├── JointOffsetPositionData.msg
+    │   │   ├── JointTorqueOnOffArray.msg
+    │   │   └── JointTorqueOnOff.msg
+    │   ├── package.xml
+    │   └── srv
+    │       └── GetPresentJointOffsetData.srv
+    ├── op3_online_walking_module_msgs
+    │   ├── CHANGELOG.rst
+    │   ├── CMakeLists.txt
+    │   ├── msg
+    │   │   ├── FootStepArray.msg
+    │   │   ├── FootStepCommand.msg
+    │   │   ├── JointPose.msg
+    │   │   ├── KinematicsPose.msg
+    │   │   ├── PreviewRequest.msg
+    │   │   ├── PreviewResponse.msg
+    │   │   ├── Step2DArray.msg
+    │   │   ├── Step2D.msg
+    │   │   └── WalkingParam.msg
+    │   ├── package.xml
+    │   └── srv
+    │       ├── GetJointPose.srv
+    │       ├── GetKinematicsPose.srv
+    │       └── GetPreviewMatrix.srv
+    ├── op3_tuning_module_msgs
+    │   ├── CMakeLists.txt
+    │   ├── msg
+    │   │   ├── JointOffsetData.msg
+    │   │   ├── JointOffsetPositionData.msg
+    │   │   ├── JointTorqueOnOffArray.msg
+    │   │   └── JointTorqueOnOff.msg
+    │   ├── package.xml
+    │   └── srv
+    │       └── GetPresentJointOffsetData.srv
+    ├── op3_walking_module_msgs
+    │   ├── CHANGELOG.rst
+    │   ├── CMakeLists.txt
+    │   ├── msg
+    │   │   └── WalkingParam.msg
+    │   ├── package.xml
+    │   └── srv
+    │       ├── GetWalkingParam.srv
+    │       └── SetWalkingParam.srv
+    └── README.md
+
+710 directories, 1663 files
