@@ -1,0 +1,31 @@
+# ===== ROS & colcon =====
+build/
+install/
+log/
+
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+
+# ===== VS Code =====
+.vscode/
+
+# ===== OS junk =====
+.DS_Store
+Thumbs.db
+
+# ===== ROS bags =====
+*.bag
+*.db3
+
+# ===== YOLO / ML stuff (opsional tapi realistis) =====
+datasets/
+runs/
+weights/
+*.pt
+*.onnx
+
+# ===== temp =====
+*.tmp
+*.swp
