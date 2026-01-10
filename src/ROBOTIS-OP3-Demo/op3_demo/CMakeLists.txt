@@ -11,7 +11,7 @@ find_package(robotis_controller_msgs REQUIRED)
 find_package(op3_walking_module_msgs REQUIRED)
 find_package(op3_action_module_msgs REQUIRED)
 find_package(robotis_math REQUIRED)
-find_package(op3_ball_detector REQUIRED)
+# find_package(op3_ball_detector REQUIRED)  # DISABLED - pakai op3_advanced_detector
 find_package(op3_ball_detector_msgs REQUIRED)
 find_package(Boost REQUIRED COMPONENTS thread)
 find_package(Eigen3 REQUIRED)
@@ -32,7 +32,7 @@ include_directories(
   ${op3_walking_module_msgs_INCLUDE_DIRS}
   ${op3_action_module_msgs_INCLUDE_DIRS}
   ${robotis_math_INCLUDE_DIRS}
-  ${op3_ball_detector_INCLUDE_DIRS}
+  # ${op3_ball_detector_INCLUDE_DIRS}  # DISABLED
   ${op3_ball_detector_msgs_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
@@ -59,7 +59,7 @@ ament_target_dependencies(op_demo_node
   op3_walking_module_msgs
   op3_action_module_msgs
   robotis_math
-  op3_ball_detector
+  # op3_ball_detector  # DISABLED
   op3_ball_detector_msgs
   Boost
   Eigen3
@@ -88,7 +88,7 @@ ament_target_dependencies(self_test_node
   op3_walking_module_msgs
   op3_action_module_msgs
   robotis_math
-  op3_ball_detector
+  # op3_ball_detector  # DISABLED
   op3_ball_detector_msgs
   Boost
   Eigen3
