@@ -38,7 +38,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from ament_index_python.packages import get_package_share_directory
-from pydantic import BaseModel, root_validator, validator
+from pydantic import BaseModel, field_validator, model_validator
 
 USB_CAM_DIR = get_package_share_directory('usb_cam')
 
@@ -46,27 +46,25 @@ USB_CAM_DIR = get_package_share_directory('usb_cam')
 class CameraConfig(BaseModel):
     name: str = 'camera1'
     param_path: Path = Path(USB_CAM_DIR, 'config', 'params_1.yaml')
-    remappings: Optional[List]
-    namespace: Optional[str]
+    remappings: Optional[List] = None
+    namespace: Optional[str] = None
 
-    @validator('param_path')
+    @field_validator('param_path')
+    @classmethod
     def validate_param_path(cls, value):
         if value and not value.exists():
             raise FileNotFoundError(f'Could not find parameter file: {value}')
         return value
 
-    @root_validator
-    def validate_root(cls, values):
-        name = values.get('name')
-        remappings = values.get('remappings')
-        if name and not remappings:
+    @model_validator(mode='after')
+    def validate_root(self):
+        if self.name and not self.remappings:
             # Automatically set remappings if name is set
-            remappings = [
-                ('image_raw', f'{name}/image_raw'),
-                ('image_raw/compressed', f'{name}/image_compressed'),
-                ('image_raw/compressedDepth', f'{name}/compressedDepth'),
-                ('image_raw/theora', f'{name}/image_raw/theora'),
-                ('camera_info', f'{name}/camera_info'),
+            self.remappings = [
+                ('image_raw', f'{self.name}/image_raw'),
+                ('image_raw/compressed', f'{self.name}/image_compressed'),
+                ('image_raw/compressedDepth', f'{self.name}/compressedDepth'),
+                ('image_raw/theora', f'{self.name}/image_raw/theora'),
+                ('camera_info', f'{self.name}/camera_info'),
             ]
-        values['remappings'] = remappings
-        return values
+        return self
