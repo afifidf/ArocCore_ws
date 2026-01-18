@@ -103,7 +103,7 @@ install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION include/${PROJECT_NAME}
 )
 
-install(DIRECTORY data launch list 
+install(DIRECTORY config data launch list 
   DESTINATION share/${PROJECT_NAME}
 )
 

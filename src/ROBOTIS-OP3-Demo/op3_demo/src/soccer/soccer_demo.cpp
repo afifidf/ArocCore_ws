@@ -52,7 +52,8 @@ SoccerDemo::SoccerDemo()
   //init ros
   enable_ = false;
 
-  std::string default_path = ament_index_cpp::get_package_share_directory("op3_gui_demo") + "/config/gui_config.yaml";
+  // AROC26: Gunakan config lokal, bukan dari op3_gui_demo yang tidak ada
+  std::string default_path = ament_index_cpp::get_package_share_directory("op3_demo") + "/config/joint_config.yaml";
   std::string path = default_path;
   // this->declare_parameter<std::string>("demo_config", default_path);
   // this->get_parameter<std::string>("demo_config", path);

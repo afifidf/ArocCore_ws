@@ -12,7 +12,8 @@
 
   <xacro:include filename="$(find op3_description)/urdf/robotis_op3.structure.head.xacro" />
 
-  <!-- <xacro:include filename="$(find op3_description)/urdf/robotis_op3.ros2.gazebo.xacro" /> -->
+  <!-- Gazebo Sim plugins -->
+  <xacro:include filename="$(find op3_description)/urdf/robotis_op3.gz_sim.xacro" />
   
   <link name="base"/>
 
@@ -52,6 +53,7 @@
   <!-- head links -->
   <xacro:robotis_op3_head parent="body_link" />  
 
-  <!-- <xacro:robotis_op3_gazebo/> -->
+  <!-- Gazebo Sim plugins -->
+  <xacro:robotis_op3_gz_sim/>
 
 </robot>

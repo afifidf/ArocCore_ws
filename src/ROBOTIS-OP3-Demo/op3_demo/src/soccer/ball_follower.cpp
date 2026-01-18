@@ -93,6 +93,9 @@ void BallFollower::startFollowing()
   on_tracking_ = true;
   RCLCPP_INFO(rclcpp::get_logger("BallFollower"), "Start Ball following");
 
+  // AROC26: Aktifkan balance terlebih dahulu sebelum walking
+  setWalkingCommand("balance on");
+  
   setWalkingCommand("start");
 
   bool result = getWalkingParam();
@@ -106,6 +109,8 @@ void BallFollower::startFollowing()
     hip_pitch_offset_ = 7.0 * M_PI / 180;
     curr_period_time_ = 0.6;
   }
+  
+  RCLCPP_INFO(rclcpp::get_logger("BallFollower"), "Balance control ENABLED for stability");
 }
 
 void BallFollower::stopFollowing()
@@ -356,7 +361,9 @@ void BallFollower::setWalkingCommand(const std::string &command)
 
 void BallFollower::setWalkingParam(double x_move, double y_move, double rotation_angle, bool balance)
 {
-  current_walking_param_.balance_enable = balance;
+  // AROC26: Balance selalu aktif untuk stabilitas saat soccer
+  // Parameter balance diabaikan, selalu true
+  current_walking_param_.balance_enable = true;
   current_walking_param_.x_move_amplitude = x_move + SPOT_FB_OFFSET;
   current_walking_param_.y_move_amplitude = y_move + SPOT_RL_OFFSET;
   current_walking_param_.angle_move_amplitude = rotation_angle + SPOT_ANGLE_OFFSET;

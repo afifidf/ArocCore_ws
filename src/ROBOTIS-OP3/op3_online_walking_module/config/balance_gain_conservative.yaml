@@ -1,0 +1,46 @@
+########## CONSERVATIVE BALANCE GAIN ########
+# Gunakan config ini jika robot terlalu "nervous" atau osilasi
+# Cocok untuk: lantai licin, robot baru, testing awal
+
+# by gyro (lebih rendah untuk stabilitas)
+foot_roll_gyro_p_gain : 0.15
+foot_roll_gyro_d_gain : 0.05
+
+foot_pitch_gyro_p_gain : 0.10
+foot_pitch_gyro_d_gain : 0.05
+
+# by imu (lebih rendah)
+foot_roll_angle_p_gain : 0.25
+foot_roll_angle_d_gain : 0.15
+
+foot_pitch_angle_p_gain : 0.20
+foot_pitch_angle_d_gain : 0.15
+
+# by ft sensor (tidak ada)
+foot_x_force_p_gain : 0.0
+foot_x_force_d_gain : 0.0
+foot_y_force_p_gain : 0.0
+foot_y_force_d_gain : 0.0
+foot_z_force_p_gain : 0.0
+foot_z_force_d_gain : 0.0
+foot_roll_torque_p_gain : 0.0
+foot_roll_torque_d_gain : 0.0
+foot_pitch_torque_p_gain : 0.0
+foot_pitch_torque_d_gain : 0.0
+
+########## CUT OFF FREQUENCY ##########
+roll_gyro_cut_off_frequency  : 30.0
+pitch_gyro_cut_off_frequency : 30.0
+roll_angle_cut_off_frequency  : 30.0
+pitch_angle_cut_off_frequency : 30.0
+foot_x_force_cut_off_frequency : 30.0
+foot_y_force_cut_off_frequency : 30.0
+foot_z_force_cut_off_frequency : 30.0
+foot_roll_torque_cut_off_frequency : 30.0
+foot_pitch_torque_cut_off_frequency : 30.0
+
+########## JOINT BALANCE GAIN ##########
+balance_hip_roll_gain    : 0.25
+balance_knee_gain        : 0.20
+balance_ankle_roll_gain  : 0.50
+balance_ankle_pitch_gain : 0.70

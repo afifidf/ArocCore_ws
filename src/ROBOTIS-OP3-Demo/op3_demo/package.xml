@@ -23,14 +23,17 @@
   <depend>op3_action_module_msgs</depend>
   <depend>ament_index_cpp</depend>
   <depend>robotis_math</depend>
-  <depend>op3_ball_detector</depend>
+  <!-- op3_ball_detector diganti dengan op3_advanced_detector -->
+  <depend>op3_advanced_detector</depend>
   <depend>op3_ball_detector_msgs</depend>
   <depend>boost</depend>
   <depend>eigen</depend>
   <depend>yaml-cpp</depend>
   <exec_depend>op3_manager</exec_depend>
+  <!-- op3_camera_setting_tool dan op3_web_setting_tool tidak tersedia
   <exec_depend>op3_camera_setting_tool</exec_depend>
   <exec_depend>op3_web_setting_tool</exec_depend>
+  -->
   <!-- <exec_depend>face_detection</exec_depend> -->
   <export>
     <build_type>ament_cmake</build_type>

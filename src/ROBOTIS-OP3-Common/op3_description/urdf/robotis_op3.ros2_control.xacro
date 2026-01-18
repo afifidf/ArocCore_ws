@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="robotis_op3_ros2_control">
+
+    <!-- ================================================================== -->
+    <!-- ros2_control Hardware Interface untuk Gazebo Sim (Ignition)        -->
+    <!-- ================================================================== -->
+    <ros2_control name="GazeboSimSystem" type="system">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+
+      <!-- Head Joints -->
+      <joint name="head_pan">
+        <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="head_tilt">
+        <command_interface name="position">
+          <param name="min">-0.7</param>
+          <param name="max">0.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- Left Arm Joints -->
+      <joint name="l_sho_pitch">
+        <command_interface name="position">
+          <param name="min">-3.14</param>
+          <param name="max">3.14</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="l_sho_roll">
+        <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="l_el">
+        <command_interface name="position">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- Right Arm Joints -->
+      <joint name="r_sho_pitch">
+        <command_interface name="position">
+          <param name="min">-3.14</param>
+          <param name="max">3.14</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="r_sho_roll">
+        <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="r_el">
+        <command_interface name="position">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- Left Leg Joints -->
+      <joint name="l_hip_yaw">
+        <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="l_hip_roll">
+        <command_interface name="position">
+          <param name="min">-0.5</param>
+          <param name="max">0.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="l_hip_pitch">
+        <command_interface name="position">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="l_knee">
+        <command_interface name="position">
+          <param name="min">-2.5</param>
+          <param name="max">2.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="l_ank_pitch">
+        <command_interface name="position">
+          <param name="min">-1.5</param>
+          <param name="max">1.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="l_ank_roll">
+        <command_interface name="position">
+          <param name="min">-0.5</param>
+          <param name="max">0.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- Right Leg Joints -->
+      <joint name="r_hip_yaw">
+        <command_interface name="position">
+          <param name="min">-1.57</param>
+          <param name="max">1.57</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="r_hip_roll">
+        <command_interface name="position">
+          <param name="min">-0.5</param>
+          <param name="max">0.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="r_hip_pitch">
+        <command_interface name="position">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="r_knee">
+        <command_interface name="position">
+          <param name="min">-2.5</param>
+          <param name="max">2.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="r_ank_pitch">
+        <command_interface name="position">
+          <param name="min">-1.5</param>
+          <param name="max">1.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="r_ank_roll">
+        <command_interface name="position">
+          <param name="min">-0.5</param>
+          <param name="max">0.5</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+
+    </ros2_control>
+
+    <!-- ================================================================== -->
+    <!-- Gazebo ros2_control Plugin                                         -->
+    <!-- ================================================================== -->
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(find op3_gazebo)/config/op3_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

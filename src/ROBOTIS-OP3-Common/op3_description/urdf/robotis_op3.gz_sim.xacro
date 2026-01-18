@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- ====================================================================== -->
+  <!-- Gazebo Sim (Ignition) Plugin untuk ROBOTIS OP3                        -->
+  <!-- ====================================================================== -->
+
+  <xacro:macro name="robotis_op3_gz_sim">
+    
+    <!-- Joint State Publisher Plugin -->
+    <gazebo>
+      <plugin filename="gz-sim-joint-state-publisher-system" 
+              name="gz::sim::systems::JointStatePublisher">
+        <topic>joint_states</topic>
+        <joint_name>head_pan</joint_name>
+        <joint_name>head_tilt</joint_name>
+        <joint_name>l_sho_pitch</joint_name>
+        <joint_name>l_sho_roll</joint_name>
+        <joint_name>l_el</joint_name>
+        <joint_name>r_sho_pitch</joint_name>
+        <joint_name>r_sho_roll</joint_name>
+        <joint_name>r_el</joint_name>
+        <joint_name>l_hip_yaw</joint_name>
+        <joint_name>l_hip_roll</joint_name>
+        <joint_name>l_hip_pitch</joint_name>
+        <joint_name>l_knee</joint_name>
+        <joint_name>l_ank_pitch</joint_name>
+        <joint_name>l_ank_roll</joint_name>
+        <joint_name>r_hip_yaw</joint_name>
+        <joint_name>r_hip_roll</joint_name>
+        <joint_name>r_hip_pitch</joint_name>
+        <joint_name>r_knee</joint_name>
+        <joint_name>r_ank_pitch</joint_name>
+        <joint_name>r_ank_roll</joint_name>
+      </plugin>
+    </gazebo>
+
+    <!-- Joint Position Controller untuk setiap joint -->
+    <!-- Head -->
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>head_pan</joint_name>
+        <topic>/model/robotis_op3/joint/head_pan/cmd_pos</topic>
+        <p_gain>5.0</p_gain>
+        <i_gain>0.0</i_gain>
+        <d_gain>0.1</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>head_tilt</joint_name>
+        <topic>/model/robotis_op3/joint/head_tilt/cmd_pos</topic>
+        <p_gain>5.0</p_gain>
+        <i_gain>0.0</i_gain>
+        <d_gain>0.1</d_gain>
+      </plugin>
+    </gazebo>
+
+    <!-- Left Arm -->
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_sho_pitch</joint_name>
+        <topic>/model/robotis_op3/joint/l_sho_pitch/cmd_pos</topic>
+        <p_gain>10.0</p_gain>
+        <i_gain>0.0</i_gain>
+        <d_gain>0.1</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_sho_roll</joint_name>
+        <topic>/model/robotis_op3/joint/l_sho_roll/cmd_pos</topic>
+        <p_gain>10.0</p_gain>
+        <i_gain>0.0</i_gain>
+        <d_gain>0.1</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_el</joint_name>
+        <topic>/model/robotis_op3/joint/l_el/cmd_pos</topic>
+        <p_gain>10.0</p_gain>
+        <i_gain>0.0</i_gain>
+        <d_gain>0.1</d_gain>
+      </plugin>
+    </gazebo>
+
+    <!-- Right Arm -->
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_sho_pitch</joint_name>
+        <topic>/model/robotis_op3/joint/r_sho_pitch/cmd_pos</topic>
+        <p_gain>10.0</p_gain>
+        <i_gain>0.0</i_gain>
+        <d_gain>0.1</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_sho_roll</joint_name>
+        <topic>/model/robotis_op3/joint/r_sho_roll/cmd_pos</topic>
+        <p_gain>10.0</p_gain>
+        <i_gain>0.0</i_gain>
+        <d_gain>0.1</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_el</joint_name>
+        <topic>/model/robotis_op3/joint/r_el/cmd_pos</topic>
+        <p_gain>10.0</p_gain>
+        <i_gain>0.0</i_gain>
+        <d_gain>0.1</d_gain>
+      </plugin>
+    </gazebo>
+
+    <!-- Left Leg -->
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_hip_yaw</joint_name>
+        <topic>/model/robotis_op3/joint/l_hip_yaw/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_hip_roll</joint_name>
+        <topic>/model/robotis_op3/joint/l_hip_roll/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_hip_pitch</joint_name>
+        <topic>/model/robotis_op3/joint/l_hip_pitch/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_knee</joint_name>
+        <topic>/model/robotis_op3/joint/l_knee/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_ank_pitch</joint_name>
+        <topic>/model/robotis_op3/joint/l_ank_pitch/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>l_ank_roll</joint_name>
+        <topic>/model/robotis_op3/joint/l_ank_roll/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+
+    <!-- Right Leg -->
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_hip_yaw</joint_name>
+        <topic>/model/robotis_op3/joint/r_hip_yaw/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_hip_roll</joint_name>
+        <topic>/model/robotis_op3/joint/r_hip_roll/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_hip_pitch</joint_name>
+        <topic>/model/robotis_op3/joint/r_hip_pitch/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_knee</joint_name>
+        <topic>/model/robotis_op3/joint/r_knee/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_ank_pitch</joint_name>
+        <topic>/model/robotis_op3/joint/r_ank_pitch/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>r_ank_roll</joint_name>
+        <topic>/model/robotis_op3/joint/r_ank_roll/cmd_pos</topic>
+        <p_gain>20.0</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>1.0</d_gain>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

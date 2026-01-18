@@ -1,0 +1,46 @@
+########## AGGRESSIVE BALANCE GAIN ########
+# Gunakan config ini untuk performa maksimal
+# Cocok untuk: lantai karpet/rumput, kompetisi, robot sudah stabil
+
+# by gyro (lebih tinggi untuk responsif)
+foot_roll_gyro_p_gain : 0.35
+foot_roll_gyro_d_gain : 0.0
+
+foot_pitch_gyro_p_gain : 0.25
+foot_pitch_gyro_d_gain : 0.0
+
+# by imu (lebih tinggi)
+foot_roll_angle_p_gain : 0.45
+foot_roll_angle_d_gain : 0.08
+
+foot_pitch_angle_p_gain : 0.35
+foot_pitch_angle_d_gain : 0.08
+
+# by ft sensor (tidak ada)
+foot_x_force_p_gain : 0.0
+foot_x_force_d_gain : 0.0
+foot_y_force_p_gain : 0.0
+foot_y_force_d_gain : 0.0
+foot_z_force_p_gain : 0.0
+foot_z_force_d_gain : 0.0
+foot_roll_torque_p_gain : 0.0
+foot_roll_torque_d_gain : 0.0
+foot_pitch_torque_p_gain : 0.0
+foot_pitch_torque_d_gain : 0.0
+
+########## CUT OFF FREQUENCY ##########
+roll_gyro_cut_off_frequency  : 50.0
+pitch_gyro_cut_off_frequency : 50.0
+roll_angle_cut_off_frequency  : 50.0
+pitch_angle_cut_off_frequency : 50.0
+foot_x_force_cut_off_frequency : 30.0
+foot_y_force_cut_off_frequency : 30.0
+foot_z_force_cut_off_frequency : 30.0
+foot_roll_torque_cut_off_frequency : 30.0
+foot_pitch_torque_cut_off_frequency : 30.0
+
+########## JOINT BALANCE GAIN ##########
+balance_hip_roll_gain    : 0.45
+balance_knee_gain        : 0.40
+balance_ankle_roll_gain  : 0.85
+balance_ankle_pitch_gain : 1.00

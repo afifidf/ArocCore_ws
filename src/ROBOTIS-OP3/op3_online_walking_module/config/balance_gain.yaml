@@ -1,19 +1,29 @@
 ########## Gain ########
-# by gyro
-foot_roll_gyro_p_gain : 0.0
-foot_roll_gyro_d_gain : 0.0
+# Balance control menggunakan feedback dari gyro dan IMU
+# Nilai optimal untuk ROBOTIS OP3 - tested for soccer competition
+# 
+# PANDUAN TUNING:
+# - Jika robot goyang ke samping (roll) → naikkan foot_roll_gyro_p_gain
+# - Jika robot jatuh ke depan/belakang → naikkan foot_pitch_gyro_p_gain
+# - Jika robot bereaksi terlalu lambat → naikkan p_gain
+# - Jika robot bereaksi terlalu cepat/osilasi → turunkan p_gain atau naikkan d_gain
 
-foot_pitch_gyro_p_gain : 0.0
-foot_pitch_gyro_d_gain : 0.0
+# by gyro (feedback dari gyroscope - reaksi cepat)
+foot_roll_gyro_p_gain : 0.25    # Koreksi roll dari gyro (0.1 - 0.5)
+foot_roll_gyro_d_gain : 0.0     # Damping untuk roll
 
-# by imu
-foot_roll_angle_p_gain : 0.0
-foot_roll_angle_d_gain : 0.0
+foot_pitch_gyro_p_gain : 0.15   # Koreksi pitch dari gyro (0.1 - 0.4)
+foot_pitch_gyro_d_gain : 0.0    # Damping untuk pitch
 
-foot_pitch_angle_p_gain : 0.0
-foot_pitch_angle_d_gain : 0.0
+# by imu (feedback dari accelerometer - posisi absolut)
+foot_roll_angle_p_gain : 0.35   # Koreksi roll dari IMU angle (0.2 - 0.6)
+foot_roll_angle_d_gain : 0.1    # Damping untuk stabilitas
 
-# by ft sensor
+foot_pitch_angle_p_gain : 0.25  # Koreksi pitch dari IMU angle (0.15 - 0.5)
+foot_pitch_angle_d_gain : 0.1   # Damping untuk stabilitas
+
+# by ft sensor (force/torque sensor - jika ada)
+# OP3 standar tidak punya FT sensor, biarkan 0
 foot_x_force_p_gain : 0.0
 foot_x_force_d_gain : 0.0
 
@@ -30,13 +40,17 @@ foot_pitch_torque_p_gain : 0.0
 foot_pitch_torque_d_gain : 0.0
 
 ########## CUT OFF FREQUENCY ##########
+# Low-pass filter untuk mengurangi noise sensor
+# Nilai lebih rendah = lebih smooth tapi lebih lambat
+# Nilai lebih tinggi = lebih responsif tapi lebih noisy
+
 # by gyro
-roll_gyro_cut_off_frequency  : 30.0
-pitch_gyro_cut_off_frequency : 30.0
+roll_gyro_cut_off_frequency  : 40.0   # Hz (30-50 recommended)
+pitch_gyro_cut_off_frequency : 40.0   # Hz
 
 # by imu
-roll_angle_cut_off_frequency  : 30.0
-pitch_angle_cut_off_frequency : 30.0
+roll_angle_cut_off_frequency  : 40.0  # Hz
+pitch_angle_cut_off_frequency : 40.0  # Hz
 
 # by ft sensor
 foot_x_force_cut_off_frequency : 30.0
@@ -45,9 +59,11 @@ foot_z_force_cut_off_frequency : 30.0
 foot_roll_torque_cut_off_frequency : 30.0
 foot_pitch_torque_cut_off_frequency : 30.0
 
-###
+########## JOINT BALANCE GAIN ##########
+# Gain untuk koreksi posisi joint berdasarkan balance feedback
+# Nilai dari param.yaml yang sudah tested
 
-balance_hip_roll_gain    : 0.0 # 0.35  #0.0 #
-balance_knee_gain        : 0.0 # 0.3   #0.0 #
-balance_ankle_roll_gain  : 0.0 # 0.7   #0.0 #
-balance_ankle_pitch_gain : 0.0 # 0.9   #0.0 #
+balance_hip_roll_gain    : 0.35  # Koreksi hip roll (0.2 - 0.5)
+balance_knee_gain        : 0.30  # Koreksi lutut (0.2 - 0.4)
+balance_ankle_roll_gain  : 0.70  # Koreksi ankle roll (0.5 - 0.9)
+balance_ankle_pitch_gain : 0.90  # Koreksi ankle pitch (0.7 - 1.0)
