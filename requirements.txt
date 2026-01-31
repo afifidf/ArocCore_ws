@@ -1,0 +1,14 @@
+# Core dependencies
+setuptools
+numpy
+opencv-python
+
+# Serial communication (untuk DynamixelSDK)
+pyserial
+
+# Machine Learning / Computer Vision (untuk op3_advanced_detector)
+ultralytics          # YOLO object detection
+openvino             # Intel OpenVINO untuk akselerasi GPU/CPU inference
+
+# Testing
+pytest
