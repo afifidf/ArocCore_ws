@@ -21,6 +21,15 @@ rosdep install --from-paths src --ignore-src -r -y
 # Build and source workspace
 colcon build
 source install/setup.bash
+
+
+
+#optional
+#build with enough ram (16gb recommended)
+colcon build --parallel-workers 4
+
+#8gb or less
+colcon build --paraller-workers 2
 ```
 ## YOLO ENV
 
