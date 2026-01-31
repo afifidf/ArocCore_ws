@@ -27,10 +27,10 @@ colcon build
 source install/setup.bash
 
 #OPTIONAL for more faster build
-#build for enough ram (16gb recommended)
+#build for enough ram (8gb or more)
 colcon build --parallel-workers 4
 
-#8gb or less
+#4gb or less
 colcon build --paraller-workers 2
 ```
 ## YOLO ENV
