@@ -1,14 +1,6 @@
-# Core dependencies
-setuptools
-numpy
+numpy<2.0
 opencv-python
-
-# Serial communication (untuk DynamixelSDK)
 pyserial
-
-# Machine Learning / Computer Vision (untuk op3_advanced_detector)
-ultralytics          # YOLO object detection
-openvino             # Intel OpenVINO untuk akselerasi GPU/CPU inference
-
-# Testing
-pytest
+ultralytics
+typeguard
+openvino
