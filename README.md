@@ -40,7 +40,7 @@ colcon build --paraller-workers 2
 ```bash
 #intel booster
 sudo apt update
-sudo apt install -y intel-opencl-icd
+sudo apt install -y intel-opencl-icd intel-level-zero-gpu level-zero
 
 #build the virtual environment
 sudo apt install -y python3.12-venv
