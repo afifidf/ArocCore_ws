@@ -39,13 +39,17 @@ colcon build --paraller-workers 2
 
 ```bash
 #intel booster
-sudo apt install intel-opencl-icd
+sudo apt update
+sudo apt install -y intel-opencl-icd
 
 #build the virtual environment
-sudo apt install python3.12-venv
-python3 -m venv ~/yolo
-source ~/yolo/bin/activate
+sudo apt install -y python3.12-venv
+
+mkdir -p ~/.venvs
+python3 -m venv ~/.venvs/yolo
+source ~/.venvs/yolo/bin/activate
+
 pip install --upgrade pip
 
 #install yolo and friends
-pip install -r requirments.txt
+pip install -r requirements.txt
