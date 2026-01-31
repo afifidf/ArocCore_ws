@@ -11,6 +11,10 @@ A core workspace for aroc team based on robotis-op3 code.
 ### How to Build
 
 ```bash
+sudo apt install python3-rosdep
+sudo rosdep init
+rosdep udpate
+
 # Clone repository
 git clone https://github.com/afifidf/ArocCore_ws.git ~/aroc3
 cd aroc3
