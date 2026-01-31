@@ -22,3 +22,19 @@ rosdep install --from-paths src --ignore-src -r -y
 colcon build
 source install/setup.bash
 ```
+## YOLO ENV
+
+### Follow This
+
+```bash
+#intel booster
+sudo apt install intel-opencl-icd
+
+#build the virtual environment
+sudo apt install python3.12-venv
+python3 -m venv ~/yolo
+source ~/yolo/bin/activate
+pip install --upgrade pip
+
+#install yolo and friends
+pip install -r requirments.txt
