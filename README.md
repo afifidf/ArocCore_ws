@@ -4,15 +4,11 @@ A core workspace for aroc team based on robotis-op3 code.
 
 ## GETTING STARTED
 
-## 🔧 Requirements
-
-### Software yang Dibutuhkan
-- Python 3.8+
+### Should Be There First
+- Ubuntu 24.04
 - ROS2 (Jazzy)
-- OpenCV
-- Ultralytics (YOLOv8)
 
-### Install Dependencies
+### How to Build
 
 ```bash
 # Clone repository
