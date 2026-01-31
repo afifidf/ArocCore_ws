@@ -12,13 +12,13 @@ A core workspace for aroc team based on robotis-op3 code.
 
 ```bash
 # Clone repository
-git clone <repository-url>
-cd study_ws
+git clone https://github.com/afifidf/ArocCore_ws.git ~/aroc3
+cd aroc3
 
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Install ROS2 dependencies
-cd 03_ros2_integration
+# Install ROS2 depedencies
 rosdep install --from-paths src --ignore-src -r -y
+
+# Build and source workspace
+colcon build
+source install/setup.bash
 ```
