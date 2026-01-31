@@ -22,8 +22,6 @@ rosdep install --from-paths src --ignore-src -r -y
 colcon build
 source install/setup.bash
 
-
-
 #optional
 #build with enough ram (16gb recommended)
 colcon build --parallel-workers 4
