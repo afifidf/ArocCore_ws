@@ -15,6 +15,7 @@
 # =============================================================================
 # IMPORT LIBRARIES
 # =============================================================================
+import os
 from launch import LaunchDescription                    # Class utama untuk launch description
 from launch.actions import DeclareLaunchArgument        # Untuk deklarasi argument launch
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution  # Substitusi nilai
@@ -62,6 +63,18 @@ def generate_launch_description():
         ),
         
         # ==================================================================
+        # LAUNCH ARGUMENTS - VENV
+        # ==================================================================
+        # Argument untuk path ke virtual environment Python
+        # Jika VIRTUAL_ENV sudah di-set di environment, gunakan itu
+        # Jika tidak, gunakan path default ke venv 'yolo'
+        DeclareLaunchArgument(
+            'venv_path',
+            default_value=os.environ.get('VIRTUAL_ENV', os.path.expanduser('~/.venvs/yolo')),
+            description='Path to Python virtual environment containing ultralytics'
+        ),
+        
+        # ==================================================================
         # NODES
         # ==================================================================
         # Node ball detector berbasis YOLO
@@ -72,5 +85,12 @@ def generate_launch_description():
             parameters=[LaunchConfiguration('config_file')],  # Load parameter dari config
             output='screen',                        # Output log ke terminal
             emulate_tty=True,                       # Support warna di log output
+            # Tambahkan PYTHONPATH dari venv agar bisa import ultralytics
+            additional_env={
+                'PYTHONPATH': os.path.join(
+                    os.environ.get('VIRTUAL_ENV', os.path.expanduser('~/.venvs/yolo')),
+                    'lib', 'python3.12', 'site-packages'
+                ) + ':' + os.environ.get('PYTHONPATH', '')
+            },
         )
     ])

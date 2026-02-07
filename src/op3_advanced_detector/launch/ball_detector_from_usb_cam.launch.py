@@ -4,18 +4,27 @@
 # Part of launch package
 # =============================================================================
 
-# op3_advanced_detector/launch/ball_detector_from_usb_cam.lauch.py
+# op3_advanced_detector/launch/ball_detector_from_usb_cam.launch.py
 
 """
 Launch file for OP3 Advanced Ball Detector with USB Camera
 This replaces the original op3_ball_detector launch file with YOLO-based detection
 """
 
+import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
+
+# =============================================================================
+# VENV CONFIGURATION
+# =============================================================================
+# Path ke virtual environment yang berisi ultralytics
+# Prioritas: VIRTUAL_ENV environment variable > default path
+VENV_PATH = os.environ.get('VIRTUAL_ENV', os.path.expanduser('~/.venvs/yolo'))
+VENV_SITE_PACKAGES = os.path.join(VENV_PATH, 'lib', 'python3.12', 'site-packages')
 
 
 def generate_launch_description():
@@ -56,8 +65,10 @@ def generate_launch_description():
                 'camera_topic': '/usb_cam_node/image_raw',
             },
         ],
-        # TIDAK pakai prefix lagi kalau tidak pakai venv
-        # remappings TIDAK perlu, karena node ini langsung subscribe ke camera_topic
+        # Tambahkan PYTHONPATH dari venv agar bisa import ultralytics
+        additional_env={
+            'PYTHONPATH': VENV_SITE_PACKAGES + ':' + os.environ.get('PYTHONPATH', '')
+        },
     )
 
     ld.add_action(config_file_arg)

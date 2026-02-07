@@ -46,13 +46,23 @@ import os                                       # Untuk environment variables
 from typing import List, Dict, Tuple, Optional  # Type hints untuk dokumentasi kode
 from pathlib import Path                        # Untuk manipulasi path file
 
-# Import YOLO dan OpenVINO (optional - untuk akselerasi inference)
+# Import YOLO (required - untuk deteksi objek)
 try:
     from ultralytics import YOLO                # Library YOLO dari Ultralytics
+    YOLO_AVAILABLE = True                       # Flag: YOLO tersedia
+except ImportError as e:
+    print(f"⚠️  YOLO module not found: {e}")
+    print(f"   Install dengan: pip install ultralytics")
+    YOLO_AVAILABLE = False                      # Flag: YOLO tidak tersedia
+    YOLO = None                                 # Placeholder untuk menghindari NameError
+
+# Import OpenVINO (optional - untuk akselerasi inference)
+try:
     import openvino as ov                       # Intel OpenVINO untuk akselerasi GPU/CPU
     OPENVINO_AVAILABLE = True                   # Flag: OpenVINO tersedia
 except ImportError as e:
-    print(f"⚠️  OpenVINO or YOLO module not found: {e}")
+    print(f"⚠️  OpenVINO module not found: {e}")
+    print(f"   Install dengan: pip install openvino")
     OPENVINO_AVAILABLE = False                  # Flag: OpenVINO tidak tersedia
 
 
@@ -260,7 +270,16 @@ class OP3AdvancedDetector(Node):
         self.device_info = "Unknown"
         self.is_openvino = False
         
-        # Try OpenVINO
+        # Check if YOLO is available
+        if not YOLO_AVAILABLE:
+            error_msg = "❌ YOLO (ultralytics) is not installed! Install dengan: pip install ultralytics"
+            self.get_logger().error(error_msg)
+            print(f"\n{'='*60}")
+            print(error_msg)
+            print(f"{'='*60}\n")
+            raise ImportError("ultralytics package is required but not installed")
+        
+        # Try OpenVINO (optional acceleration)
         if OPENVINO_AVAILABLE and self._try_openvino_setup():
             return
             

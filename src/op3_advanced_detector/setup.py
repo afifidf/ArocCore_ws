@@ -22,7 +22,12 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
         (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
     ],
-    install_requires=['setuptools'],
+    install_requires=[
+        'setuptools',
+        'ultralytics',  # YOLO models
+        'opencv-python',
+        'numpy',
+    ],
     zip_safe=True,
     maintainer='ROBOTIS',
     maintainer_email='robotis@robotis.com',

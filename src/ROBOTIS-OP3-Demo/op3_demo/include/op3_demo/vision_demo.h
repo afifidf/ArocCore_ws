@@ -17,7 +17,7 @@
 /* Author: Kayman Jung */
 
 #ifndef VISION_DEMO_H_
-#define VISION_DEMO_H_
+#define VISION_DEMO_H_    
 
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
