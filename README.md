@@ -23,15 +23,15 @@ cd aroc3
 rosdep install --from-paths src --ignore-src -r -y
 
 # Build and source workspace
-colcon build
+colcon build --symlink-install
 source install/setup.bash
 
 #OPTIONAL for more faster build
 #build for enough ram (8gb or more)
-colcon build --parallel-workers 4
+colcon build --symlink-install --parallel-workers 4
 
 #4gb or less
-colcon build --paraller-workers 2
+colcon build -- symlink-install --paraller-workers 2
 ```
 ## YOLO ENV
 
