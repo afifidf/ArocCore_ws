@@ -11,6 +11,10 @@ A core workspace for aroc team based on robotis-op3 code.
 ### How to Build
 
 ```bash
+sudo apt install python3-rosdep
+sudo rosdep init
+rosdep update
+
 # Clone repository
 git clone https://github.com/afifidf/ArocCore_ws.git ~/aroc3
 cd aroc3
@@ -19,15 +23,15 @@ cd aroc3
 rosdep install --from-paths src --ignore-src -r -y
 
 # Build and source workspace
-colcon build
+colcon build --symlink-install
 source install/setup.bash
 
 #OPTIONAL for more faster build
-#build for enough ram (16gb recommended)
-colcon build --parallel-workers 4
+#build for enough ram (8gb or more)
+colcon build --symlink-install --parallel-workers 4
 
-#8gb or less
-colcon build --paraller-workers 2
+#4gb or less
+colcon build -- symlink-install --paraller-workers 2
 ```
 ## YOLO ENV
 
@@ -35,13 +39,17 @@ colcon build --paraller-workers 2
 
 ```bash
 #intel booster
-sudo apt install intel-opencl-icd
+sudo apt update
+sudo apt install -y intel-opencl-icd
 
 #build the virtual environment
-sudo apt install python3.12-venv
-python3 -m venv ~/yolo
-source ~/yolo/bin/activate
+sudo apt install -y python3.12-venv
+
+mkdir -p ~/.venvs
+python3 -m venv ~/.venvs/yolo
+source ~/.venvs/yolo/bin/activate
+
 pip install --upgrade pip
 
 #install yolo and friends
-pip install -r requirments.txt
+pip install -r requirements.txt
