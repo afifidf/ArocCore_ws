@@ -11,9 +11,14 @@ from ultralytics import YOLO
 from rclpy.qos import qos_profile_sensor_data
 from .configCam import CameraConfig #OPSIONAL, Kameraku Jelek
 
-SET_CONF = 0.6  # threshold confidence deteksi bola (dipakai di model DAN filter manual)
-FRAME_W = 640   # lebar frame (pixel) — harus sama dengan InRangeMax PAN di mainHeadControl
-FRAME_H = 480   # tinggi frame (pixel) — harus sama dengan InRangeMax TILT di mainHeadControl
+SET_CONF       = 0.6   # threshold confidence deteksi bola
+SET_CONF_GOAL  = 0.5   # threshold confidence deteksi gawang (lebih rendah karena gawang lebih susah)
+FRAME_W        = 640   # lebar frame (pixel) — harus sama dengan InRangeMax PAN di mainHeadControl
+FRAME_H        = 480   # tinggi frame (pixel) — harus sama dengan InRangeMax TILT di mainHeadControl
+
+# Nama class di model YOLO
+CLASS_BALL = "bola"
+CLASS_GOAL = "Gawang"   # pastikan nama class di model YOLO kamu sama persis
 
 
 class UsbCamSubscriber(Node):
@@ -36,10 +41,25 @@ class UsbCamSubscriber(Node):
         self.prev_time = 0.0
         self.fps = 0.0
 
-        # Publisher hasil deteksi
+        # Publisher hasil deteksi BOLA
         self.obj_pub = self.create_publisher(
             String,
             '/obj_detect',
+            10
+        )
+
+        # Publisher hasil deteksi GAWANG
+        # Format: "cx,cy,w,h" → dipakai oleh goal_alignment.py
+        self.goal_pub = self.create_publisher(
+            String,
+            '/obj_detect_goal',
+            10
+        )
+
+        # Publisher bbox bola lengkap (cx,cy,w,h) → dipakai task_control untuk estimasi jarak
+        self.ball_bbox_pub = self.create_publisher(
+            String,
+            '/obj_detect_ball_bbox',
             10
         )
 
@@ -85,47 +105,88 @@ class UsbCamSubscriber(Node):
 
             # =========================
             # AMBIL DETEKSI TERBAIK
+            # Pisahkan antara bola dan gawang dalam satu loop
             # =========================
+
+            # ── BOLA ──────────────────────────────────────
+            best_ball_conf = 0.0
+            best_ball_cx   = None
+            best_ball_cy   = None
+            best_ball_w    = None
+            best_ball_h    = None
+
+            # ── GAWANG ────────────────────────────────────
+            best_goal_conf = 0.0
+            best_goal_cx   = None
+            best_goal_cy   = None
+            best_goal_w    = None
+            best_goal_h    = None
+
             if r.boxes is not None and len(r.boxes) > 0:
-
-                best_conf = 0.0
-                best_cx = None
-                best_cy = None
-
                 for box in r.boxes:
-                    cls_id = int(box.cls[0])
-                    conf = float(box.conf[0])
+                    cls_id     = int(box.cls[0])
+                    conf       = float(box.conf[0])
                     class_name = r.names[cls_id]
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+                    cx = (x1 + x2) // 2
+                    cy = (y1 + y2) // 2
+                    w  = x2 - x1
+                    h  = y2 - y1
 
-                    if class_name != "bola":
-                        continue
+                    # ── Deteksi BOLA ──────────────────────
+                    if class_name == CLASS_BALL and conf >= SET_CONF:
+                        if conf > best_ball_conf:
+                            best_ball_conf = conf
+                            best_ball_cx   = cx
+                            best_ball_cy   = cy
+                            best_ball_w    = w
+                            best_ball_h    = h
 
-                    # [FIX] Filter hanya berdasarkan best_conf karena model sudah
-                    # filter conf >= SET_CONF. Tidak perlu cek conf > SET_CONF lagi.
-                    if conf > best_conf:
-                        x1, y1, x2, y2 = map(int, box.xyxy[0])
-                        cx = (x1 + x2) // 2
-                        cy = (y1 + y2) // 2
-
-                        best_conf = conf
-                        best_cx = cx
-                        best_cy = cy
-
-                # Setelah loop selesai, kirim hanya yang terbaik
-                if best_cx is not None:
-                    self.get_logger().info(
-                        f"BEST DETECTION | conf={best_conf:.2f} | center=({best_cx},{best_cy})"
-                    )
-                    # Publish koordinat dalam frame FRAME_W x FRAME_H (640x480)
-                    detected_objects.append(f"{best_cx},{best_cy}")
+                    # ── Deteksi GAWANG ────────────────────
+                    elif class_name == CLASS_GOAL and conf >= SET_CONF_GOAL:
+                        if conf > best_goal_conf:
+                            best_goal_conf = conf
+                            best_goal_cx   = cx
+                            best_goal_cy   = cy
+                            best_goal_w    = w
+                            best_goal_h    = h
 
             # =========================
-            # PUBLISH KE TOPIC
+            # PUBLISH BOLA → /obj_detect
+            # Format: "cx,cy"
             # =========================
+            if best_ball_cx is not None:
+                self.get_logger().info(
+                    f"[BOLA] conf={best_ball_conf:.2f} | center=({best_ball_cx},{best_ball_cy})"
+                )
+                detected_objects.append(f"{best_ball_cx},{best_ball_cy}")
+                # Publish bbox lengkap untuk estimasi jarak
+                ball_bbox_msg = String()
+                ball_bbox_msg.data = f"{best_ball_cx},{best_ball_cy},{best_ball_w},{best_ball_h}"
+                self.ball_bbox_pub.publish(ball_bbox_msg)
+
             if detected_objects:
                 msg_out = String()
                 msg_out.data = "\n".join(detected_objects)
                 self.obj_pub.publish(msg_out)
+
+            # =========================
+            # PUBLISH GAWANG → /obj_detect_goal
+            # Format: "cx,cy,w,h"
+            # Jika tidak terdeteksi → publish string kosong
+            # agar goal_alignment.py tau gawang tidak kelihatan
+            # =========================
+            goal_msg = String()
+            if best_goal_cx is not None:
+                goal_msg.data = f"{best_goal_cx},{best_goal_cy},{best_goal_w},{best_goal_h}"
+                self.get_logger().info(
+                    f"[GAWANG] conf={best_goal_conf:.2f} | "
+                    f"center=({best_goal_cx},{best_goal_cy}) | "
+                    f"size=({best_goal_w}x{best_goal_h})"
+                )
+            else:
+                goal_msg.data = ""   # kosong = gawang tidak terdeteksi
+            self.goal_pub.publish(goal_msg)
 
             # =========================
             # HITUNG FPS

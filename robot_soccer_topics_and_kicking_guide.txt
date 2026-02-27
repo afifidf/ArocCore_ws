@@ -1,0 +1,175 @@
+================================================================================
+ROBOTIS OP3 SOCCER MODE - WALKING & KICKING GUIDE
+================================================================================
+
+IMPORTANT TOPICS AND PACKAGES FOR WALKING AND KICKING
+================================================================================
+
+1. KEY PACKAGES:
+   - op3_walking_module: Controls robot walking/gait
+   - op3_action_module: Controls predefined motions including kicks
+   - op3_demo: Contains soccer_demo for ball tracking and kicking logic
+   - op3_ball_detector_msgs: Ball detection messages
+   - robotis_controller_msgs: Module control and status messages
+
+2. IMPORTANT ROS TOPICS:
+
+   WALKING CONTROL:
+   - /robotis/walking/command (std_msgs/String)
+     * Commands: "start", "stop", "balance on", "balance off"
+   
+   - /robotis/walking/set_params (op3_walking_module_msgs/WalkingParam)
+     * Controls walking parameters (speed, direction, balance)
+   
+   - /robotis/walking/get_params (service)
+     * Get current walking parameters
+
+   ACTION/KICKING CONTROL:
+   - /robotis/action/page_num (std_msgs/Int32)
+     * Publish motion page number to execute kick or other actions
+   
+   - /robotis/action/is_running (service: op3_action_module_msgs/IsRunning)
+     * Check if action is currently running
+
+   MODULE CONTROL:
+   - /robotis/set_present_joint_ctrl_modules (service)
+     * Switch between modules (walking_module, action_module, head_control_module)
+
+   BALL DETECTION:
+   - /ball_detector_node/circle_set (op3_ball_detector_msgs/CircleSetStamped)
+     * Ball position detection output
+
+3. MOTION PAGE NUMBERS (from op_demo.h):
+   - InitPose = 1
+   - WalkingReady = 9
+   - LeftKick = 120
+   - RightKick = 121
+   - GetUpFront = 122
+   - GetUpBack = 123
+   - Ceremony = 27
+
+================================================================================
+MANUALLY PUBLISHING KICK COMMANDS FROM TERMINAL
+================================================================================
+
+WHILE RUNNING SOCCER MODE (demo.launch.xml):
+
+The demo.launch.xml launches:
+- op3_manager (robot controller)
+- op3_advanced_detector (ball detection with YOLO)
+- op3_yolo_viewer (visualization)
+- op_demo_node (soccer demo with ball following and kicking)
+
+To manually trigger a kick while soccer mode is running:
+
+STEP 1: Ensure the robot is in action_module mode
+-----------------------------------------------
+# First, switch from walking_module to action_module
+# This is required before executing any kick motion
+
+ros2 service call /robotis/set_present_joint_ctrl_modules robotis_controller_msgs/srv/SetJointModule "{
+  joint_name: ['r_hip_yaw', 'r_hip_roll', 'r_hip_pitch', 'r_knee', 'r_ank_pitch', 'r_ank_roll', 'l_hip_yaw', 'l_hip_roll', 'l_hip_pitch', 'l_knee', 'l_ank_pitch', 'l_ank_roll', 'r_sho_pitch', 'l_sho_pitch'],
+  module_name: ['action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module', 'action_module']
+}"
+
+STEP 2: Execute Left Kick (Page 120)
+-----------------------------------
+ros2 topic pub /robotis/action/page_num std_msgs/Int32 "{data: 120}" --once
+
+STEP 3: Execute Right Kick (Page 121)
+------------------------------------
+ros2 topic pub /robotis/action/page_num std_msgs/Int32 "{data: 121}" --once
+
+STEP 4: Return to Walking Mode (after kick)
+------------------------------------------
+# Switch back to walking_module for ball following
+ros2 service call /robotis/set_present_joint_ctrl_modules robotis_controller_msgs/srv/SetJointModule "{
+  joint_name: ['r_hip_yaw', 'r_hip_roll', 'r_hip_pitch', 'r_knee', 'r_ank_pitch', 'r_ank_roll', 'l_hip_yaw', 'l_hip_roll', 'l_hip_pitch', 'l_knee', 'l_ank_pitch', 'l_ank_roll', 'r_sho_pitch', 'l_sho_pitch'],
+  module_name: ['walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module', 'walking_module']
+}"
+
+STEP 5: Resume Walking
+---------------------
+ros2 topic pub /robotis/walking/command std_msgs/String "{data: 'start'}" --once
+
+================================================================================
+ALTERNATIVE: MANUAL WALKING CONTROL
+================================================================================
+
+To control walking manually:
+
+1. Start walking:
+   ros2 topic pub /robotis/walking/command std_msgs/String "{data: 'start'}" --once
+
+2. Stop walking:
+   ros2 topic pub /robotis/walking/command std_msgs/String "{data: 'stop'}" --once
+
+3. Enable balance control:
+   ros2 topic pub /a/walking/command std_msgs/String "{data: 'balance on'}" --once
+
+4. Set walking parameters (move forward 0.02m, no sideways, rotate 0.1 rad):
+   ros2 topic pub /robotis/walking/set_params op3_walking_module_msgs/WalkingParam "{
+     x_move_amplitude: 0.02,
+     y_move_amplitude: 0.0,
+     angle_move_amplitude: 0.1,
+     balance_enable: true
+   }" --once
+
+================================================================================
+FILE LOCATIONS
+================================================================================
+
+Key Source Files:
+- src/ROBOTIS-OP3-Demo/op3_demo/launch/demo.launch.xml
+- src/ROBOTIS-OP3-Demo/op3_demo/src/soccer/soccer_demo.cpp
+- src/ROBOTIS-OP3-Demo/op3_demo/src/soccer/ball_follower.cpp
+- src/ROBOTIS-OP3/op3_walking_module/src/op3_walking_module.cpp
+- src/ROBOTIS-OP3/op3_action_module/src/action_module.cpp
+- src/ROBOTIS-OP3-Demo/op3_demo/include/op3_demo/op_demo.h (motion indices)
+
+Message Definitions:
+- src/ROBOTIS-OP3-msgs/op3_walking_module_msgs/msg/WalkingParam.msg
+- src/ROBOTIS-OP3-msgs/op3_action_module_msgs/msg/StartAction.msg
+- src/ROBOTIS-Framework-msgs/robotis_controller_msgs/msg/JointCtrlModule.msg
+
+================================================================================
+SOCCER MODE WORKFLOW
+================================================================================
+
+The soccer_demo node automates this process:
+
+1. Starts in action_module, plays WalkingReady motion (page 9)
+2. Switches to walking_module for ball following
+3. Ball tracking runs continuously (head_control_module for head joints)
+4. When ball is in range (distance < 0.22m and |angle| < 25°):
+   - Stops walking
+   - Switches to action_module
+   - Determines kick foot based on ball position (left/right)
+   - Executes kick (page 120 for left, page 121 for right)
+   - Returns to walking mode and continues tracking
+
+5. Fall detection:
+   - Monitors /robotis/open_cr/imu topic
+   - If fallen forward (pitch > 60°): plays GetUpFront (page 122)
+   - If fallen backward (pitch < -60°): plays GetUpBack (page 123)
+
+================================================================================
+USEFUL DEBUG COMMANDS
+================================================================================
+
+# List all active topics
+ros2 topic list
+
+# Echo ball detection
+ros2 topic echo /ball_detector_node/circle_set
+
+# Check action module status
+ros2 service call /robotis/action/is_running op3_action_module_msgs/srv/IsRunning
+
+# Monitor IMU data
+ros2 topic echo /robotis/open_cr/imu
+
+# Check current joint control modules
+ros2 topic echo /robotis/present_joint_ctrl_modules
+
+================================================================================

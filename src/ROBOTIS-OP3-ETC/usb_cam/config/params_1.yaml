@@ -4,7 +4,7 @@
       framerate: 30.0
       io_method: "mmap"
       frame_id: "camera"
-      pixel_format: "mjpeg2rgb"  # MJPG -> RGB conversion
+      pixel_format: "mjpeg"  # MJPG -> RGB conversion
       av_device_format: "YUV422P"
       image_width: 1280
       image_height: 720

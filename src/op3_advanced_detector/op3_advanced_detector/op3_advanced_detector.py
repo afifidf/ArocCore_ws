@@ -9,7 +9,7 @@
 # File ini adalah node ROS2 untuk deteksi bola menggunakan YOLO + OpenVINO
 # Digunakan pada robot ROBOTIS OP3 untuk kompetisi robot soccer
 # =============================================================================
-
+# loc: aroc26/src/op3_advanced_detector/op3_advanced_detector/op3_advanced_detector.py
 #!/usr/bin/env python3
 """
 OP3 Advanced Ball Detector
@@ -87,10 +87,10 @@ class OP3AdvancedDetector(Node):
     DEFAULT_INPUT_SIZE = (320, 320)
     
     # === Konstanta Class ===
-    BALL_CLASS_ID = 67              # ID class "sports ball" dalam dataset COCO
+    BALL_CLASS_ID = 34              # ID class "sports ball" dalam dataset COCO
     DEFAULT_CONF_THRESHOLD = 0.25   # Threshold confidence minimum (0.0 - 1.0)
     DEFAULT_IOU_THRESHOLD = 0.5     # Threshold IoU untuk Non-Maximum Suppression
-    MAX_DETECTIONS = 3              # Jumlah maksimum bola yang dideteksi per frame
+    MAX_DETECTIONS = 2              # Jumlah maksimum bola yang dideteksi per frame
     
     def __init__(self):
         """

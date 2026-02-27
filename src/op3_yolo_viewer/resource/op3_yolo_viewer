@@ -1,2 +1,0 @@
-mkdir -p op3_yolo_viewer/resource
-echo "op3_yolo_viewer" > op3_yolo_viewer/resource/op3_yolo_viewer
