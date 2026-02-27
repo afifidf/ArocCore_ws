@@ -1,8 +1,7 @@
+# loc: /home/afifi/aroc26/src/buttonHandler26/buttonHandler26/buttonHandler.py
 import time
-
 import rclpy
 from rclpy.node import Node
-
 from std_msgs.msg import String, Int32
 from geometry_msgs.msg import Twist
 
@@ -12,156 +11,116 @@ class ButtonSoccerNode(Node):
     def __init__(self):
         super().__init__('button_soccer_node')
 
-        # ==============================
-        # Subscriber tombol OpenCR
-        # ==============================
-        self.button_sub = self.create_subscription(
+        self.create_subscription(
             String,
             '/robotis/open_cr/button',
             self.button_callback,
             10
         )
 
-        # ==============================
-        # Publisher control module
-        # ==============================
         self.module_pub = self.create_publisher(
             String,
             '/robotis/enable_ctrl_module',
             10
         )
 
-        # ==============================
-        # Publisher walking start/stop
-        # ==============================
         self.walking_command_pub = self.create_publisher(
             String,
             '/robotis/walking/command',
             10
         )
 
-        # ==============================
-        # Publisher velocity (Twist)
-        # ==============================
         self.walking_vel_pub = self.create_publisher(
             Twist,
             '/robotis/walking/velocity',
             10
         )
 
-        # ==============================
-        # Publisher action page (Init Pose)
-        # ==============================
         self.action_pub = self.create_publisher(
             Int32,
             '/robotis/action/page_num',
             10
         )
 
-        # ==============================
-        # State variables
-        # ==============================
+        # NEW → control head
+        self.head_state_pub = self.create_publisher(
+            String,
+            '/head/state',
+            10
+        )
+
         self.is_walking = False
-        self.current_mode = "walking"  # bisa: "walking" atau "soccer"
 
-        self.get_logger().info("Button Soccer Node Ready | Mode: Walking")
+        self.get_logger().info("Button Soccer Node Ready")
 
-    # ==========================================================
-    # BUTTON CALLBACK
     # ==========================================================
     def button_callback(self, msg):
+
         button = msg.data
 
-        # ------------------------------
-        # USER BUTTON → INIT POSE
-        # ------------------------------
         if button == "user":
-            self.get_logger().info("USER pressed → Init Pose")
-            if self.is_walking:
-                self.stop_walking()
+            self.stop_walking()
 
             module_msg = String()
             module_msg.data = "action_module"
             self.module_pub.publish(module_msg)
 
-            time.sleep(0.5)  # kasih waktu module aktif
+            time.sleep(0.5)
 
             page = Int32()
-            page.data = 15  # page init pose
+            page.data = 15
             self.action_pub.publish(page)
 
-            self.is_walking = False
+            # Head OFF
+            off = String()
+            off.data = "off"
+            self.head_state_pub.publish(off)
 
-        # ------------------------------
-        # MODE BUTTON → TOGGLE WALKING / SOCCER
-        # ------------------------------
-        elif button == "mode":
-            if self.current_mode == "walking":
-                self.current_mode = "soccer"
-                self.get_logger().info("MODE pressed → Soccer Mode")
-                self.enable_soccer_mode()
-            else:
-                self.current_mode = "walking"
-                self.get_logger().info("MODE pressed → Walking Mode")
-                self.enable_walking_mode()
-
-        # ------------------------------
-        # START BUTTON → TOGGLE WALK
-        # ------------------------------
         elif button == "start":
+
             if not self.is_walking:
                 self.start_walking()
+
+                # Aktifkan head scan
+                scan = String()
+                scan.data = "scan"
+                self.head_state_pub.publish(scan)
+
             else:
                 self.stop_walking()
 
-    # ==========================================================
-    # ENABLE MODES
-    # ==========================================================
-    def enable_soccer_mode(self):
-        if self.is_walking:
-            self.stop_walking()
+                off = String()
+                off.data = "off"
+                self.head_state_pub.publish(off)
 
-        module_msg = String()
-        module_msg.data = "soccer_module"
-        self.module_pub.publish(module_msg)
-
-    def enable_walking_mode(self):
-        if self.is_walking:
-            self.stop_walking()
+    # ==========================================================
+    def start_walking(self):
 
         module_msg = String()
         module_msg.data = "walking_module"
         self.module_pub.publish(module_msg)
 
-    # ==========================================================
-    # START WALKING
-    # ==========================================================
-    def start_walking(self):
-        self.get_logger().info(f"Start Walking | Mode: {self.current_mode}")
+        time.sleep(0.3)
 
-        cmd_msg = String()
-        cmd_msg.data = "start"
-        self.walking_command_pub.publish(cmd_msg)
+        cmd = String()
+        cmd.data = "start"
+        self.walking_command_pub.publish(cmd)
 
         twist = Twist()
         twist.linear.x = 0.03
-        twist.linear.y = 0.0
-        twist.angular.z = 0.0
         self.walking_vel_pub.publish(twist)
 
         self.is_walking = True
+        self.get_logger().info("Walking START + Head SCAN")
 
-    # ==========================================================
-    # STOP WALKING
-    # ==========================================================
     def stop_walking(self):
-        self.get_logger().info("Stop Walking")
 
-        cmd_msg = String()
-        cmd_msg.data = "stop"
-        self.walking_command_pub.publish(cmd_msg)
+        cmd = String()
+        cmd.data = "stop"
+        self.walking_command_pub.publish(cmd)
 
         self.is_walking = False
+        self.get_logger().info("Walking STOP")
 
 
 def main(args=None):

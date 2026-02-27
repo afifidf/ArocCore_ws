@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>aroc26</name>
+  <version>0.0.0</version>
+  <description>Launch file utama AROC26 — menjalankan semua package sekaligus</description>
+  <maintainer email="adekmail31@gmail.com">afifi</maintainer>
+  <license>Apache-2.0</license>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>headControl26</exec_depend>
+  <exec_depend>buttonHandler26</exec_depend>
+  <exec_depend>KickNRush</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

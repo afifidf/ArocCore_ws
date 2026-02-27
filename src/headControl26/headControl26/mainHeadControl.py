@@ -1,117 +1,114 @@
-# loc: aroc26/src/headControl26/headControl26/mainHeadControl.py
+# mainHeadControl.py — Head tracking node ROS2 untuk robot OP3 AROC26
+# Subscribe /obj_detect → EKF filter → PID → publish JointState ke head
+# Mode: TRACK (bola terdeteksi) | SCAN (bola hilang, kepala sweep kiri-kanan)
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String, Int32
+from std_msgs.msg import String
 from sensor_msgs.msg import JointState
+from geometry_msgs.msg import Vector3
 from .motionPID import PIDControl
 from .ballEKF import BallEKF
-from geometry_msgs.msg import Vector3
 import time
 
-HEAD_PAN = 0
+HEAD_PAN  = 0
 HEAD_TILT = 1
 
+# ── Tuning PID ────────────────────────────────────────────────
+# TILT
+TILT_KP   = 1.2    # gain proportional
+TILT_KI   = 0.8    # gain integral
+TILT_KD   = 1.2    # gain derivative
+TILT_TI   = 10.0   # periode integral (ms) — anti windup timing
+TILT_TD   = 10.0   # periode derivative (ms)
+TILT_MIN  = -1.2   # output min (rad)
+TILT_MAX  =  0.0   # output max (rad)
+TILT_SP   = 240.0  # setpoint (tengah frame vertikal, px)
 
-class ButtonStandScan(Node):
+# PAN
+PAN_KP    = 0.75
+PAN_KI    = 0.0
+PAN_KD    = 0.0
+PAN_TI    = 10.0
+PAN_TD    = 10.0
+PAN_MIN   = -1.2
+PAN_MAX   =  1.2
+PAN_SP    = 320.0  # setpoint (tengah frame horizontal, px)
+
+# ── Frame size — harus sama dengan vision.py ──────────────────
+FRAME_W = 640
+FRAME_H = 480
+
+# ── Threshold deadband (px) — di bawah ini PID tidak update ──
+DEADBAND_X = 8
+DEADBAND_Y = 8
+
+# ── Scan parameter ────────────────────────────────────────────
+SCAN_STEP    = 0.05   # rad per tick saat sweep
+SCAN_TILT    = -0.4   # posisi tilt saat scan
+SCAN_TIMEOUT = 0.7    # s — bola hilang lebih dari ini → masuk scan mode
+
+# ── Joint limit ───────────────────────────────────────────────
+PAN_LIMIT  = 1.2
+TILT_LOWER = -1.2
+TILT_UPPER =  0.0
+
+
+class HeadControlNode(Node):
+    """
+    Node head tracking robot OP3.
+
+    Alur:
+      /obj_detect → EKF update → PID calculate → JointState publish
+                                              ↓
+      Jika bola hilang > SCAN_TIMEOUT → scan_head() (sweep kiri-kanan)
+
+    Topic subscribe:
+      /obj_detect   → posisi bola (cx,cy) dari vision.py
+      /head/state   → "scan" aktifkan head | "off" nonaktifkan
+
+    Topic publish:
+      /robotis/head_control/set_joint_states → posisi servo kepala
+      /robotis/enable_ctrl_module            → aktifkan head_control_module
+      /vision/ball_measurement               → posisi bola raw (debug)
+      /vision/ball_ekf                       → posisi bola setelah EKF (debug)
+    """
 
     def __init__(self):
-        super().__init__('button_stand_scan_node')
+        super().__init__('headcontrol_node')
 
-        # ==============================
-        # Subscriber
-        # ==============================
-        self.create_subscription(
-            String,
-            '/robotis/open_cr/button',
-            self.button_callback,
-            10
-        )
+        # ── Publisher ─────────────────────────────────────────
+        self.module_pub   = self.create_publisher(String,    '/robotis/enable_ctrl_module', 10)
+        self.head_pub     = self.create_publisher(JointState, '/robotis/head_control/set_joint_states', 10)
+        self.ball_meas_pub = self.create_publisher(Vector3,   '/vision/ball_measurement', 10)
+        self.ball_ekf_pub  = self.create_publisher(Vector3,   '/vision/ball_ekf', 10)
 
-        self.create_subscription(
-            String,
-            '/obj_detect',
-            self.obj_callback,
-            10
-        )
+        # ── Subscriber ────────────────────────────────────────
+        self.create_subscription(String, '/obj_detect', self._obj_callback, 10)
+        self.create_subscription(String, '/head/state', self._head_state_callback, 10)
 
-        # ==============================
-        # Publisher
-        # ==============================
-        self.module_pub = self.create_publisher(
-            String, '/robotis/enable_ctrl_module', 10
-        )
-
-        self.page_pub = self.create_publisher(
-            Int32, '/robotis/action/page_num', 10
-        )
-
-        self.head_pub = self.create_publisher(
-            JointState,
-            '/robotis/head_control/set_joint_states',
-            10
-        )
-
-        # Topic buat ngukur bola
-        self.ball_meas_pub = self.create_publisher(
-            Vector3,
-            '/vision/ball_measurement',
-            10
-        )
-
-        # ============================================================
-        # [EKF] Publisher untuk state EKF (posisi + kecepatan)
-        # Berguna untuk debugging dan monitoring performa EKF
-        # Format Vector3: x=px_filtered, y=py_filtered, z=0
-        # ============================================================
-        self.ball_ekf_pub = self.create_publisher(
-            Vector3,
-            '/vision/ball_ekf',
-            10
-        )
-
-        # ==============================
-        # STATE
-        # ==============================
-        self.state = 0
-        self.head_enabled = False
-        self.head_mode = "scan"   # scan / track
-
-        # ==============================
-        # PID SETUP
-        # ==============================
+        # ── PID setup ─────────────────────────────────────────
         self.pid = [PIDControl() for _ in range(2)]
 
-        # TILT
-        self.pid[HEAD_TILT].setConstant(Kp=1.0, Ki=0.0, Kd=0.2)
-        self.pid[HEAD_TILT].setRange(0, 480, -1.2, 0.0)
-        self.pid[HEAD_TILT].setSetPoints(240)
+        # TILT — tambahkan setTime() sesuai referensi ROS1
+        self.pid[HEAD_TILT].setConstant(Kp=TILT_KP, Ki=TILT_KI, Kd=TILT_KD)
+        self.pid[HEAD_TILT].setTime(Ti=TILT_TI, Td=TILT_TD)
+        self.pid[HEAD_TILT].setRange(InMin=0, InMax=FRAME_H, OutMin=TILT_MIN, OutMax=TILT_MAX)
+        self.pid[HEAD_TILT].setSetPoints(TILT_SP)
 
-        # PAN
-        self.pid[HEAD_PAN].setConstant(Kp=1.4, Ki=0.0, Kd=0.25)  # Kp=1.0,Ki=0.0, Kd=0.2 ; Kp=1.35,Ki=0.0, Kd=0.3
-        self.pid[HEAD_PAN].setRange(0, 640, -1.2, 1.2)
-        self.pid[HEAD_PAN].setSetPoints(320)
+        # PAN — tambahkan setTime() sesuai referensi ROS1
+        self.pid[HEAD_PAN].setConstant(Kp=PAN_KP, Ki=PAN_KI, Kd=PAN_KD)
+        self.pid[HEAD_PAN].setTime(Ti=PAN_TI, Td=PAN_TD)
+        self.pid[HEAD_PAN].setRange(InMin=0, InMax=FRAME_W, OutMin=PAN_MIN, OutMax=PAN_MAX)
+        self.pid[HEAD_PAN].setSetPoints(PAN_SP)
 
         for i in range(2):
             self.pid[i].Init()
+            self.pid[i].setError(0)
             self.pid[i].setEnableWindUpLimit()
             self.pid[i].setEnableWindUpCrossing()
 
-        # ============================================================
-        # [EKF] Inisialisasi Extended Kalman Filter
-        #
-        # Parameter tuning:
-        #   dt              = 0.05 detik (sesuai timer 20 Hz)
-        #   process_noise_pos = 2.0  → agak responsif terhadap gerakan bola
-        #   process_noise_vel = 8.0  → estimasi kecepatan cukup agresif
-        #   measure_noise     = 6.0  → mempercayai measurement cukup besar
-        #                              (lebih kecil = lebih presisi tapi lebih berisik)
-        #
-        # Cara tuning:
-        #   - Jika tracking terlalu lambat merespons → perkecil measure_noise
-        #   - Jika tracking terlalu berisik/jitter   → perbesar measure_noise
-        #   - Jika prediksi saat bola hilang kurang akurat → perbesar process_noise_vel
-        # ============================================================
+        # ── EKF ───────────────────────────────────────────────
         self.ekf = BallEKF(
             dt=0.05,
             process_noise_pos=2.0,
@@ -119,303 +116,187 @@ class ButtonStandScan(Node):
             measure_noise=6.0
         )
 
-        # ============================================================
-        # [EKF] Simpan waktu terakhir control_loop untuk hitung dt aktual
-        # Digunakan pada langkah predict EKF di control_loop
-        # ============================================================
+        # ── State ─────────────────────────────────────────────
+        self.state          = 0       # 0=idle, 2=active
+        self.head_enabled   = False
+        self.head_mode      = "scan"
+
+        # Posisi servo kepala saat ini
+        self.pan            = 0.0
+        self.tilt           = -0.3
+
+        # Scan
+        self.scan_dir       = 1
+        self.last_detect_time = self.get_clock().now()
+
+        # Loop timing
         self._last_loop_time = time.time()
 
-        # ==============================
-        # SCAN PARAMETER
-        # ==============================
-        self.pan = 0.0
-        self.tilt = -0.3
-        self.scan_dir = 1
-
-        self.last_detection_time = self.get_clock().now()
-        self.scan_timeout = 0.7  # 1.0
-
-        # ==============================
-        # MAIN LOOP
-        # ==============================
-        self.timer = self.create_timer(0.05, self.control_loop)
+        # ── Timer loop 20 Hz ──────────────────────────────────
+        self.timer = self.create_timer(0.05, self._control_loop)
 
         self.get_logger().info("Head Tracking + Auto Scan + EKF Initialized")
 
-    # ==========================================================
-    # BUTTON CALLBACK
-    # ==========================================================
-    def button_callback(self, msg):
+    # ── CALLBACKS ─────────────────────────────────────────────────────────────
 
-        if msg.data == "user":
-            self.enable_action_module()
-            self.play_page(15)
-
-        elif msg.data == "start":
-            self.enable_action_module()
-            self.play_page(15)
+    def _head_state_callback(self, msg: String):
+        """Aktifkan/nonaktifkan head tracking dari topic /head/state"""
+        if msg.data == "scan":
             self.state = 2
-            self.get_logger().info("Stand sequence triggered")
+            self._enter_scan_mode()
+            self.get_logger().info("[HeadControl] State → SCAN (ACTIVE)")
+        elif msg.data == "off":
+            self.state = 0
+            self.head_enabled = False
+            self.get_logger().info("[HeadControl] State → OFF")
 
-    # ==========================================================
-    # CONTROL LOOP (20 Hz)
-    # ==========================================================
-    def control_loop(self):
+    def _obj_callback(self, msg: String):
+        """
+        Terima posisi bola dari /obj_detect → format 'cx,cy'.
+        Update EKF lalu hitung PID.
+        """
+        data = msg.data.strip()
+        if not data:
+            return
 
+        for line in data.split('\n'):
+            parts = line.strip().split(',')
+            if len(parts) < 2:
+                continue
+            try:
+                cx = float(parts[0])
+                cy = float(parts[1])
+            except ValueError:
+                continue
+
+            if cx <= 0 or cy <= 0:
+                continue
+
+            # Update waktu deteksi terakhir
+            self.last_detect_time = self.get_clock().now()
+
+            # Update EKF dengan pengukuran baru
+            self.ekf.update(px_meas=cx, py_meas=cy)
+            px_ekf, py_ekf = self.ekf.get_position()
+
+            # Publish data mentah dan EKF untuk debug
+            raw_msg = Vector3()
+            raw_msg.x, raw_msg.y = cx, cy
+            self.ball_meas_pub.publish(raw_msg)
+
+            ekf_msg = Vector3()
+            ekf_msg.x, ekf_msg.y = px_ekf, py_ekf
+            self.ball_ekf_pub.publish(ekf_msg)
+
+            # Hitung PID dari posisi EKF
+            error_x = px_ekf - PAN_SP
+            error_y = py_ekf - TILT_SP
+
+            if abs(error_x) > DEADBAND_X:
+                self.pid[HEAD_PAN].calculate(px_ekf)
+                self.pan += self.pid[HEAD_PAN].getOutput()
+
+            if abs(error_y) > DEADBAND_Y:
+                self.pid[HEAD_TILT].calculate(py_ekf)
+                self.tilt += self.pid[HEAD_TILT].getOutput()
+
+            # Clamp ke joint limit
+            self.pan  = max(-PAN_LIMIT,  min(PAN_LIMIT,  self.pan))
+            self.tilt = max(TILT_LOWER,  min(TILT_UPPER, self.tilt))
+
+    # ── CONTROL LOOP ──────────────────────────────────────────────────────────
+
+    def _control_loop(self):
+        """Loop 20 Hz: prediksi EKF + kirim perintah servo kepala"""
         if self.state != 2:
             return
 
+        # Aktifkan head_control_module jika belum
         if not self.head_enabled:
-            self.enable_head_module()
+            self._enable_head_module()
             self.head_enabled = True
 
-        now = self.get_clock().now()
-        dt = (now - self.last_detection_time).nanoseconds / 1e9
-
-        # ============================================================
-        # [EKF] Hitung dt aktual untuk langkah predict
-        # dt aktual digunakan agar prediksi EKF akurat dengan waktu nyata
-        # ============================================================
+        # Hitung dt untuk prediksi EKF
         now_wall = time.time()
-        dt_loop = now_wall - self._last_loop_time
-        dt_loop = max(dt_loop, 1e-4)   # hindari dt nol
-        dt_loop = min(dt_loop, 0.2)    # clamp maksimal 200ms
+        dt_loop  = max(min(now_wall - self._last_loop_time, 0.2), 1e-4)
         self._last_loop_time = now_wall
 
-        if dt > self.scan_timeout:
+        # Hitung waktu sejak deteksi terakhir
+        dt_detect = (self.get_clock().now() - self.last_detect_time).nanoseconds / 1e9
+
+        if dt_detect > SCAN_TIMEOUT:
+            # Bola hilang → scan mode
             if self.head_mode != "scan":
-                self.enter_scan_mode()
-            self.scan_head()
+                self._enter_scan_mode()
+            self._scan_head()
         else:
+            # Bola ada → track mode
             if self.head_mode != "track":
-                self.enter_track_mode()
+                self._enter_track_mode()
 
-            # ============================================================
-            # [EKF] Langkah PREDICT di setiap loop control (20 Hz)
-            # Walaupun tidak ada measurement baru dari YOLO, EKF tetap
-            # memprediksi posisi bola berdasarkan kecepatan yang diestimasi.
-            # Ini membuat PID mendapat input yang lebih smooth dan kontinyu.
-            #
-            # [FIX] DOUBLE PREDICT DIHINDARI dengan cara:
-            # - predict() di sini hanya dipanggil di control_loop (20 Hz)
-            # - update() di obj_callback TIDAK memanggil predict internal lagi
-            #   (di ballEKF, update() sudah dipisah: hanya koreksi, predict
-            #    dilakukan di sini di control_loop)
-            # Sebelumnya: update() di ballEKF memanggil F@x dan F@P@F.T sendiri
-            # DAN control_loop juga memanggil predict() → state dipropagasi 2x.
-            # Sekarang: predict() hanya ada di satu tempat (control_loop).
-            # ============================================================
+            # Prediksi EKF walaupun tidak ada deteksi baru
             self.ekf.predict(dt=dt_loop)
-
-            # ============================================================
-            # [EKF] Cek apakah EKF perlu di-reset (bola hilang terlalu lama)
-            # ============================================================
             if self.ekf.should_reset():
                 self.ekf.reset()
-                self.get_logger().info("[EKF] Filter di-reset karena bola hilang terlalu lama")
 
-            self.track_head()
+            # Publish posisi servo (HeadJoint)
+            self._publish_head_joint(self.pan, self.tilt)
 
-    # ==========================================================
-    # OBJECT CALLBACK
-    # ==========================================================
-    def obj_callback(self, msg):
+    # ── MODE HELPER ───────────────────────────────────────────────────────────
 
-        # ============================================================
-        # [FIX] Guard: jangan proses deteksi jika robot belum dalam
-        # state aktif (state == 2). Sebelumnya EKF dan PID ikut
-        # berjalan walau robot belum berdiri → state pan/tilt kotor
-        # saat tracking pertama kali dimulai.
-        #
-        # [FIX v2] EKF update + publish debug tetap bisa berjalan
-        # walau state != 2, agar /vision/ball_ekf bisa dimonitor
-        # kapan saja untuk keperluan debugging dan tuning parameter.
-        # Yang TIDAK boleh berjalan saat state != 2 adalah:
-        #   - PID calculate (mengubah self.pan / self.tilt)
-        #   - publish servo ke robot
-        # ============================================================
-        pid_active = (self.state == 2)
-
-        lines = msg.data.strip().split('\n')
-
-        for line in lines:
-            parts = line.strip().split(',')
-
-            if len(parts) == 2:
-                try:
-                    cx = int(parts[0])
-                    cy = int(parts[1])
-
-                    center_x = 640 // 2
-                    center_y = 480 // 2
-
-                    deadband = 8  # pixel toleransi
-
-                    if cx > 0 and cy > 0:
-                        self.last_detection_time = self.get_clock().now()
-
-                        # PUBLISH KE EKF (raw measurement untuk monitoring)
-                        meas = Vector3()
-                        meas.x = float(cx - center_x)
-                        meas.y = float(cy - center_y)
-                        meas.z = 0.0
-                        self.ball_meas_pub.publish(meas)
-
-                        # ============================================================
-                        # [EKF] UPDATE EKF dengan measurement baru dari YOLO
-                        # EKF menggabungkan prediksi model dengan measurement sensor
-                        # menggunakan Kalman Gain untuk menghasilkan estimasi optimal.
-                        # Input  : px, py raw dari YOLO (koordinat pixel absolut)
-                        # Output : state terkoreksi [px, py, vx, vy]
-                        # ============================================================
-                        self.ekf.update(px_meas=float(cx), py_meas=float(cy))
-
-                        # ============================================================
-                        # [EKF] Ambil posisi yang sudah difilter EKF
-                        # px_ekf, py_ekf sudah smooth dan bebas noise YOLO
-                        # ============================================================
-                        px_ekf, py_ekf = self.ekf.get_position()
-
-                        # ============================================================
-                        # [EKF] Publish posisi EKF untuk monitoring / debugging
-                        # ============================================================
-                        ekf_msg = Vector3()
-                        ekf_msg.x = px_ekf - float(center_x)   # error dari center
-                        ekf_msg.y = py_ekf - float(center_y)
-                        ekf_msg.z = 0.0
-                        self.ball_ekf_pub.publish(ekf_msg)
-
-                        # ============================================================
-                        # [EKF] Hitung error menggunakan posisi EKF (bukan raw pixel)
-                        # Inilah keuntungan utama EKF:
-                        #   - px_ekf/py_ekf lebih smooth → PID lebih stabil
-                        #   - Tidak ada spike tiba-tiba dari noise YOLO
-                        #   - Gerakan head pan/tilt menjadi halus dan presisi
-                        # ============================================================
-                        error_x = px_ekf - float(center_x)   # error pan  (+ = bola di kanan)
-                        error_y = py_ekf - float(center_y)   # error tilt (+ = bola di bawah)
-
-                        # =========================
-                        # DEAD BAND + PID
-                        # Hanya aktif jika state == 2 (robot sudah berdiri)
-                        # [FIX v2] Guard pid_active memisahkan:
-                        #   - EKF update + debug publish → selalu aktif
-                        #   - PID + servo publish → hanya saat state == 2
-                        # =========================
-                        if pid_active:
-                            if abs(error_x) >= deadband:
-                                # [EKF] PID PAN menggunakan px_ekf (posisi smooth dari EKF)
-                                self.pid[HEAD_PAN].setSetPoints(center_x)
-                                self.pid[HEAD_PAN].calculate(px_ekf)
-                                self.pan += self.pid[HEAD_PAN].getOutput()
-
-                            if abs(error_y) >= deadband:
-                                # [EKF] PID TILT menggunakan py_ekf (posisi smooth dari EKF)
-                                self.pid[HEAD_TILT].setSetPoints(center_y)
-                                self.pid[HEAD_TILT].calculate(py_ekf)
-                                self.tilt += self.pid[HEAD_TILT].getOutput()
-
-                            self.pan = max(-1.2, min(1.2, self.pan))
-                            self.tilt = max(-1.2, min(0.0, self.tilt))
-
-                        self.get_logger().info(
-                            f"[EKF] raw=({cx},{cy}) → ekf=({px_ekf:.1f},{py_ekf:.1f}) "
-                            f"| state={'ACTIVE' if pid_active else 'DEBUG-ONLY'} "
-                            f"| pan={self.pan:.3f} tilt={self.tilt:.3f}"
-                        )
-
-                except Exception:
-                    self.get_logger().warn(f"Gagal parse: {line}")
-
-    # ==========================================================
-    # MODE TRANSITION
-    # ==========================================================
-    def enter_scan_mode(self):
+    def _enter_scan_mode(self):
         self.head_mode = "scan"
-
-        for i in range(2):
-            self.pid[i].Init()
-
-        # ============================================================
-        # [EKF] Reset EKF saat masuk scan mode
-        # Saat bola hilang dan masuk scan mode, EKF di-reset agar
-        # saat bola ditemukan kembali filter mulai fresh (tidak
-        # terpengaruh state lama yang mungkin sudah tidak relevan)
-        # ============================================================
         self.ekf.reset()
-
-        self.pan = 0.0
+        for i in range(2):
+            self.pid[i].reset()
+        self.pan  = 0.0
         self.tilt = -0.3
 
-        self.get_logger().info("ENTER SCAN MODE — EKF reset")
-
-    def enter_track_mode(self):
+    def _enter_track_mode(self):
         self.head_mode = "track"
 
-        for i in range(2):
-            self.pid[i].Init()
-
-        self.get_logger().info("ENTER TRACK MODE")
-
-    # ==========================================================
-    # TRACK MODE
-    # ==========================================================
-    def track_head(self):
-        self.publish_servo(self.pan, self.tilt)
-
-    # ==========================================================
-    # SCAN MODE
-    # ==========================================================
-    def scan_head(self):
-
-        self.pan += 0.05 * self.scan_dir
-
-        if self.pan >= 1.2:
-            self.pan = 1.2
+    def _scan_head(self):
+        """Sweep kepala kiri-kanan saat bola tidak terdeteksi"""
+        self.pan += SCAN_STEP * self.scan_dir
+        if self.pan >= PAN_LIMIT:
+            self.pan      = PAN_LIMIT
             self.scan_dir = -1
-        elif self.pan <= -1.2:
-            self.pan = -1.2
+        elif self.pan <= -PAN_LIMIT:
+            self.pan      = -PAN_LIMIT
             self.scan_dir = 1
+        self._publish_head_joint(self.pan, SCAN_TILT)
 
-        self.publish_servo(self.pan, -0.4)
+    # ── PUBLISH ───────────────────────────────────────────────────────────────
 
-    # ==========================================================
-    # SERVO PUBLISH
-    # ==========================================================
-    def publish_servo(self, pan, tilt):
-
+    def _publish_head_joint(self, pan: float, tilt: float):
+        """
+        Publish perintah posisi servo kepala ke /robotis/head_control/set_joint_states.
+        Setara dengan motion.HeadJoint() di ROS1.
+        """
         msg = JointState()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.name = ['head_pan', 'head_tilt']
-        msg.position = [pan, tilt]
-
+        msg.name         = ['head_pan', 'head_tilt']
+        msg.position     = [float(pan), float(tilt)]
         self.head_pub.publish(msg)
 
-    # ==========================================================
-    # UTIL
-    # ==========================================================
-    def enable_action_module(self):
-        mode = String()
-        mode.data = "action_module"
-        self.module_pub.publish(mode)
-
-    def enable_head_module(self):
-        mode = String()
-        mode.data = "head_control_module"
-        self.module_pub.publish(mode)
-        self.get_logger().info("Head control module enabled")
-
-    def play_page(self, num):
-        cmd = Int32()
-        cmd.data = num
-        self.page_pub.publish(cmd)
+    def _enable_head_module(self):
+        """Aktifkan head_control_module di robotis_controller"""
+        msg      = String()
+        msg.data = "head_control_module"
+        self.module_pub.publish(msg)
+        self.get_logger().info("[HeadControl] head_control_module enabled")
 
 
 def main():
     rclpy.init()
-    node = ButtonStandScan()
-    rclpy.spin(node)
-    rclpy.shutdown()
+    node = HeadControlNode()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().info("[HeadControl] Node dihentikan.")
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':
