@@ -3,22 +3,25 @@
 # ============================================================
 # Launch file untuk package headControl26
 # ============================================================
-# Menjalankan dua node secara bersamaan:
+# Menjalankan tiga node secara bersamaan:
 #
-#   1. vision_node  — Subscriber kamera (/image_raw),
-#                     inferensi YOLO OpenVINO, publish posisi
-#                     bola ke /obj_detect
+#   1. usb_cam_node     — Driver kamera USB, publish /image_raw
 #
-#   2. headcontrol_node — Subscriber /obj_detect,
-#                         filter EKF posisi bola,
-#                         PID head pan/tilt,
-#                         publish ke /robotis/head_control/set_joint_states
+#   2. vision_node      — Subscribe /image_raw,
+#                         inferensi YOLO OpenVINO,
+#                         publish /obj_detect, /obj_detect_ball_bbox,
+#                         /obj_detect_goal
+#
+#   3. headcontrol_node — Subscribe /obj_detect,
+#                         filter EKF + PID head pan/tilt,
+#                         publish /robotis/head_control/set_joint_states
 #
 # Cara menjalankan:
 #   ros2 launch headControl26 headControl26.launch.py
 #
 # Optional argument:
 #   ros2 launch headControl26 headControl26.launch.py log_level:=debug
+#   ros2 launch headControl26 headControl26.launch.py device:=/dev/video2
 # ============================================================
 
 from launch import LaunchDescription
@@ -29,25 +32,53 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-    # ============================================================
-    # Argument: log level (default info, bisa diubah ke debug)
-    # ============================================================
+    # ── Argument: log level ───────────────────────────────────
     log_level_arg = DeclareLaunchArgument(
         'log_level',
         default_value='info',
         description='Log level untuk semua node (debug, info, warn, error)'
     )
 
-    log_level = LaunchConfiguration('log_level')
+    # ── Argument: device kamera ───────────────────────────────
+    device_arg = DeclareLaunchArgument(
+        'device',
+        default_value='/dev/video0',
+        description='Device kamera USB (default: /dev/video0)'
+    )
 
-    # ============================================================
-    # Node 1: vision_node
-    # Bertugas:
-    #   - Subscribe /image_raw dari USB kamera
-    #   - Jalankan inferensi YOLO OpenVINO
-    #   - Publish koordinat pixel bola ke /obj_detect (String)
-    #   - Tampilkan frame dengan anotasi (cv2.imshow)
-    # ============================================================
+    log_level = LaunchConfiguration('log_level')
+    device    = LaunchConfiguration('device')
+
+    # ── Node 1: usb_cam_node ──────────────────────────────────
+    # Driver kamera USB dari package usb_cam.
+    # Publish /image_raw yang di-subscribe oleh vision_node.
+    # Parameter:
+    #   video_device → path device kamera (default /dev/video0)
+    #   image_width  → lebar frame = 640 (sama dengan FRAME_W di vision.py)
+    #   image_height → tinggi frame = 480 (sama dengan FRAME_H di vision.py)
+    #   framerate    → 30 fps
+    usb_cam_node = Node(
+        package='usb_cam',
+        executable='usb_cam_node_exe',
+        name='usb_cam_node',
+        output='screen',
+        parameters=[{
+            'video_device': device,
+            'image_width':  640,
+            'image_height': 480,
+            'framerate':    30.0,
+            'pixel_format': 'yuyv',
+            'camera_name':  'usb_cam',
+        }],
+        arguments=['--ros-args', '--log-level', log_level],
+    )
+
+    # ── Node 2: vision_node ───────────────────────────────────
+    # Subscribe /image_raw → YOLO OpenVINO → publish deteksi bola & gawang.
+    # Publish:
+    #   /obj_detect           → "cx,cy" posisi bola
+    #   /obj_detect_ball_bbox → "cx,cy,w,h" bbox bola (untuk estimasi jarak)
+    #   /obj_detect_goal      → "cx,cy,w,h" bbox gawang
     vision_node = Node(
         package='headControl26',
         executable='vision',
@@ -56,16 +87,13 @@ def generate_launch_description():
         arguments=['--ros-args', '--log-level', log_level],
     )
 
-    # ============================================================
-    # Node 2: headcontrol_node
-    # Bertugas:
-    #   - Subscribe /obj_detect (posisi bola raw dari YOLO)
-    #   - Update EKF dengan measurement baru
-    #   - Hitung error pan/tilt dari posisi EKF (smooth)
-    #   - Jalankan PID untuk menggerakkan head servo
-    #   - Publish JointState ke /robotis/head_control/set_joint_states
-    #   - Publish debug ke /vision/ball_measurement dan /vision/ball_ekf
-    # ============================================================
+    # ── Node 3: headcontrol_node ──────────────────────────────
+    # Subscribe /obj_detect → EKF smooth → PID → gerak kepala.
+    # Subscribe /head/state → "scan" aktifkan | "off" matikan.
+    # Publish:
+    #   /robotis/head_control/set_joint_states → posisi servo kepala
+    #   /vision/ball_measurement               → posisi bola raw (debug)
+    #   /vision/ball_ekf                       → posisi bola EKF (debug)
     headcontrol_node = Node(
         package='headControl26',
         executable='headcontrol',
@@ -76,6 +104,8 @@ def generate_launch_description():
 
     return LaunchDescription([
         log_level_arg,
+        device_arg,
+        usb_cam_node,
         vision_node,
         headcontrol_node,
     ])

@@ -93,7 +93,7 @@ class AdaptivePID(PID):
         self.last_error = error
         self.error_sum += error
         if self.error_sum > self.output_range[1]:
-            self.error_sum = self.output_range
+            self.error_sum = self.output_range[1]   # fix: assign nilai, bukan list!
         elif self.error_sum < self.output_range[0]:
             self.error_sum = self.output_range[0]
         p = self.kp * error
@@ -229,11 +229,8 @@ class PIDControl:
         self.Output = self.Output * (self.OutRangeMax - self.OutRangeMin)
         if self.Output > self.OutRangeMax:
             self.Output = self.OutRangeMax
-        else:
-            if self.Output < self.OutRangeMin:
-                self.Output = self.Output
-            else:
-                self.Output = self.Output
+        elif self.Output < self.OutRangeMin:
+            self.Output = self.OutRangeMin
         if self.currTime - self.lastCurrTime_Ti > self.Ti:
             self.lastCurrTime_Ti = self.currTime
             if self.windup_limit == "ENABLE":  # ANTI WINDUP LIMIT - GUARD
@@ -254,7 +251,6 @@ class PIDControl:
                 self.sumError = 0
         self.prevTime = self.currTime
         self.prevError = self.error
-        self.Output = self.Output
         return self.Output
 
     def reset(self):

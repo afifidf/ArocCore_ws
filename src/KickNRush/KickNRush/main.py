@@ -5,7 +5,7 @@
 
 import rclpy
 from rclpy.node import Node
-from .task_control import TaskControl
+from ._task_control import TaskControl
 
 LOOP_HZ = 20  # frekuensi update (Hz)
 

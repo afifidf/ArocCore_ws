@@ -25,7 +25,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'button_soccer = buttonHandler.buttonHandler:main'
+            'button_soccer = buttonHandler26.buttonHandler:main'
         ],
     },
 )

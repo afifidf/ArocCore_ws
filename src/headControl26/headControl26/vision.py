@@ -27,8 +27,11 @@ class UsbCamSubscriber(Node):
 
         self.bridge = CvBridge()
 
-        self.camera = CameraConfig("/dev/video0")
-        self.camera.apply_default_settings()
+        # CameraConfig TIDAK dipakai di sini karena kamera sudah dibuka
+        # oleh usb_cam_node dari launch file headControl26.launch.py.
+        # Membuka kamera dua kali → device busy error!
+        # self.camera = CameraConfig("/dev/video0")
+        # self.camera.apply_default_settings()
         # =========================
         # LOAD MODEL OPENVINO
         # =========================
@@ -66,7 +69,7 @@ class UsbCamSubscriber(Node):
         # Subscribe kamera
         self.create_subscription(
             Image,
-            '/image_raw',
+            'usb_cam_node/image_raw',
             self.image_callback,
             qos_profile_sensor_data
         )
@@ -155,15 +158,19 @@ class UsbCamSubscriber(Node):
             # PUBLISH BOLA → /obj_detect
             # Format: "cx,cy"
             # =========================
+            ball_bbox_msg = String()
             if best_ball_cx is not None:
                 self.get_logger().info(
                     f"[BOLA] conf={best_ball_conf:.2f} | center=({best_ball_cx},{best_ball_cy})"
                 )
                 detected_objects.append(f"{best_ball_cx},{best_ball_cy}")
                 # Publish bbox lengkap untuk estimasi jarak
-                ball_bbox_msg = String()
                 ball_bbox_msg.data = f"{best_ball_cx},{best_ball_cy},{best_ball_w},{best_ball_h}"
-                self.ball_bbox_pub.publish(ball_bbox_msg)
+            else:
+                # Publish string kosong agar task_control tahu bola hilang
+                # Tanpa ini, task_control pakai nilai _ball_width lama → tidak tahu bola hilang!
+                ball_bbox_msg.data = ""
+            self.ball_bbox_pub.publish(ball_bbox_msg)
 
             if detected_objects:
                 msg_out = String()

@@ -146,8 +146,8 @@ class HeadControlNode(Node):
             self._enter_scan_mode()
             self.get_logger().info("[HeadControl] State → SCAN (ACTIVE)")
         elif msg.data == "off":
-            self.state = 0
-            self.head_enabled = False
+            self.state        = 0
+            self.head_enabled = False   # reset agar head_control_module di-publish ulang saat scan lagi
             self.get_logger().info("[HeadControl] State → OFF")
 
     def _obj_callback(self, msg: String):
@@ -155,6 +155,11 @@ class HeadControlNode(Node):
         Terima posisi bola dari /obj_detect → format 'cx,cy'.
         Update EKF lalu hitung PID.
         """
+        # Abaikan data bola kalau head masih OFF (state=0)
+        # Supaya EKF tidak terisi data stale saat head baru diaktifkan
+        if self.state != 2:
+            return
+
         data = msg.data.strip()
         if not data:
             return
@@ -188,27 +193,17 @@ class HeadControlNode(Node):
             ekf_msg.x, ekf_msg.y = px_ekf, py_ekf
             self.ball_ekf_pub.publish(ekf_msg)
 
-            # Hitung PID dari posisi EKF
-            error_x = px_ekf - PAN_SP
-            error_y = py_ekf - TILT_SP
-
-            if abs(error_x) > DEADBAND_X:
-                self.pid[HEAD_PAN].calculate(px_ekf)
-                self.pan += self.pid[HEAD_PAN].getOutput()
-
-            if abs(error_y) > DEADBAND_Y:
-                self.pid[HEAD_TILT].calculate(py_ekf)
-                self.tilt += self.pid[HEAD_TILT].getOutput()
-
-            # Clamp ke joint limit
-            self.pan  = max(-PAN_LIMIT,  min(PAN_LIMIT,  self.pan))
-            self.tilt = max(TILT_LOWER,  min(TILT_UPPER, self.tilt))
+            # PID TIDAK dihitung di sini — dipindah ke _control_loop (20Hz)
+            # Supaya PID konsisten 20Hz, tidak tergantung kecepatan vision publish
 
     # ── CONTROL LOOP ──────────────────────────────────────────────────────────
 
     def _control_loop(self):
         """Loop 20 Hz: prediksi EKF + kirim perintah servo kepala"""
         if self.state != 2:
+            # Reset _last_loop_time saat idle agar dt_loop tidak meledak
+            # ketika head diaktifkan kembali setelah lama OFF
+            self._last_loop_time = time.time()
             return
 
         # Aktifkan head_control_module jika belum
@@ -228,6 +223,9 @@ class HeadControlNode(Node):
             # Bola hilang → scan mode
             if self.head_mode != "scan":
                 self._enter_scan_mode()
+            # Tetap predict EKF saat scan agar posisi tidak stale
+            # ketika bola tiba-tiba ketemu lagi
+            self.ekf.predict(dt=dt_loop)
             self._scan_head()
         else:
             # Bola ada → track mode
@@ -239,7 +237,24 @@ class HeadControlNode(Node):
             if self.ekf.should_reset():
                 self.ekf.reset()
 
-            # Publish posisi servo (HeadJoint)
+            # Hitung PID dari posisi EKF (konsisten 20Hz di sini, bukan di callback)
+            px_ekf, py_ekf = self.ekf.get_position()
+            error_x = px_ekf - PAN_SP
+            error_y = py_ekf - TILT_SP
+
+            if abs(error_x) > DEADBAND_X:
+                self.pid[HEAD_PAN].calculate(px_ekf)
+                self.pan += self.pid[HEAD_PAN].getOutput()
+
+            if abs(error_y) > DEADBAND_Y:
+                self.pid[HEAD_TILT].calculate(py_ekf)
+                self.tilt += self.pid[HEAD_TILT].getOutput()
+
+            # Clamp ke joint limit
+            self.pan  = max(-PAN_LIMIT,  min(PAN_LIMIT,  self.pan))
+            self.tilt = max(TILT_LOWER,  min(TILT_UPPER, self.tilt))
+
+            # Publish posisi servo
             self._publish_head_joint(self.pan, self.tilt)
 
     # ── MODE HELPER ───────────────────────────────────────────────────────────
