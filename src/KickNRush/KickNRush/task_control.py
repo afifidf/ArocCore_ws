@@ -193,6 +193,9 @@ class TaskControl:
             self._set_state(State.ORBIT)
             return
 
+        # Pastikan walking_module tetap aktif
+        self._enable_walking_module_soft()
+
         param = WalkingParam()
         param.x_move_amplitude     = APPROACH_X
         param.y_move_amplitude     = 0.0
@@ -214,6 +217,9 @@ class TaskControl:
             self._stop_walking()
             self._set_state(State.ADJUST)
             return
+
+        # Pastikan walking_module tetap aktif (antisipasi bentrok dengan head_control_module)
+        self._enable_walking_module_soft()
 
         direction = self.alignment.get_orbit_direction()
         self.orbit.set_direction(direction)
@@ -249,6 +255,9 @@ class TaskControl:
 
         self.crab.set_direction(direction, speed_mode="slow")
         x, y, angle, period = self.crab.get_params()
+
+        # Pastikan walking_module tetap aktif
+        self._enable_walking_module_soft()
 
         param = WalkingParam()
         param.x_move_amplitude     = x
@@ -322,6 +331,16 @@ class TaskControl:
         msg = String(); msg.data = 'walking_module'
         self._pub_module.publish(msg)
         time.sleep(0.5)
+
+    def _enable_walking_module_soft(self):
+        """Publish walking_module tanpa sleep — aman dipanggil tiap loop 20Hz.
+        Dipakai di state ORBIT/APPROACH/ADJUST agar walking_module tidak
+        di-override oleh head_control_module dari headControl26."""
+        now = time.time()
+        if not hasattr(self, '_last_module_pub') or (now - self._last_module_pub) > 1.0:
+            msg = String(); msg.data = 'walking_module'
+            self._pub_module.publish(msg)
+            self._last_module_pub = now
 
     def _enable_action_module(self):
         msg = String(); msg.data = 'action_module'
