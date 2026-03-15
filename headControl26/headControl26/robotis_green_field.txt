@@ -1,0 +1,1 @@
+{'robotis_green_field_lower_val': [65, 75, 59], 'robotis_green_field_upper_val': [230, 120, 208]}

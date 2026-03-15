@@ -1,0 +1,4 @@
+[flake8]
+jobs = 1
+max-line-length = 120
+ignore = D,I,Q000,CNL100,E221,E302,E305,E501,E702,W292

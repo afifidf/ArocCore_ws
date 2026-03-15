@@ -1,0 +1,1 @@
+{'robotis_orange_ball_lower_val': [3, 68, 21], 'robotis_orange_ball_upper_val': [33, 255, 243]}
